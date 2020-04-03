@@ -1,0 +1,40 @@
+{
+  "project_info": {
+    "project_number": "1012100990536",
+    "firebase_url": "https://beta-new.firebaseio.com",
+    "project_id": "beta-new",
+    "storage_bucket": "beta-new.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1012100990536:android:794d5cc1d1f614b3737a7d",
+        "android_client_info": {
+          "package_name": "com.example.betaomer"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "1012100990536-b4huvjo2sfdiobjht1hj2i29buk6is1b.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyC8Hdu9ddZQU5uOS-bMV_PiN1Ov1jqyisY"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "1012100990536-b4huvjo2sfdiobjht1hj2i29buk6is1b.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
