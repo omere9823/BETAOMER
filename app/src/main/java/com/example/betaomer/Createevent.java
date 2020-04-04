@@ -3,6 +3,7 @@ package com.example.betaomer;
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
 import android.os.Bundle;
+import android.view.Menu;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
@@ -13,21 +14,30 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.util.ArrayList;
 import java.util.Calendar;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+import static com.example.betaomer.FBref.refEventt;
+
+
+
 
 public class Createevent extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    String name,date;
+    String name,date,id2;
     ListView lw1;
     Button DateBtn,BtnCr;
     DatePickerDialog dpd;
     Calendar c;
     TextView TVD;
-    String [] ArrayList = {"Meat - ","Salad - ","Chicken - ","Fish - ","Asian - ","Pasta - ","Fried - "};
-    String [] Sidor = {};
+    Eventt Eventt;
+    ArrayList<String> ars;
+
+
+    //String [] ArrayList = {"Meat - ","Salad - ","Chicken - ","Fish - ","Asian - ","Pasta - ","Fried - "};
+    //String [] Sidor = {};
     ArrayAdapter<String> adp;
 
 
@@ -41,9 +51,22 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
         TVD = (TextView) findViewById(R.id.TVD);
         lw1 = (ListView) findViewById(R.id.lw1);
         DateBtn = (Button) findViewById(R.id.btnPD);
+
+
+        ars = new ArrayList<>();
+        ars.add("Meat - ");
+        ars.add("Salad - ");
+        ars.add("Chicken - ");
+        ars.add("Fish - ");
+        ars.add("Asian - ");
+        ars.add("Pasta - ");
+        ars.add("Fried - ");
         lw1.setOnItemClickListener(this);
-        adp = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, ArrayList);
+        adp = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, ars);
         lw1.setAdapter(adp);
+
+
+
 
         DateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -67,10 +90,13 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
 
             }
         });
-
-
     }
 
+    public boolean onCreateOptionsMenu (Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        return true;
+    }
 
 
     @Override
@@ -81,12 +107,12 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
         adb.setTitle("workers");
         adb.setView(edittext);
 
-        adp=new ArrayAdapter<String> (this,R.layout.support_simple_spinner_dropdown_item,ArrayList);
+        adp=new ArrayAdapter<String> (this,R.layout.support_simple_spinner_dropdown_item,ars);
 
         adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
                 name = edittext.getText().toString();
-                ArrayList[position] = ArrayList[position] + name;
+                ars.set(position, ars.get(position) + name);
                 lw1.setAdapter(adp);
 
 
@@ -94,8 +120,6 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
 
 
         }
-
-
         );
         adb.setNegativeButton("BACK", new DialogInterface.OnClickListener() {
             public void onClick(DialogInterface dialog, int whichButton) {
@@ -105,12 +129,16 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
         ad.show();
 
 
+
     }
 
-    public void BtnCr(View view) {
-       date=TVD.getText().toString();
-       Sidor=ArrayList[]
 
+    public void BtnCr(View view) {
+
+       date=TVD.getText().toString();
+         Eventt=new Eventt(date, ars);
+        refEventt.child(date).setValue(Eventt);
+        Toast.makeText(this, "Successful registration", Toast.LENGTH_LONG).show();
 
     }
 }

@@ -9,6 +9,7 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
+import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -56,6 +57,13 @@ public class MainActivity extends AppCompatActivity {
 
         regoption();
     }
+
+    public boolean onCreateOptionsMenu (Menu menu) {
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        return true;
+    }
+
 
     @Override
     protected void onStart() {
@@ -175,15 +183,6 @@ public class MainActivity extends AppCompatActivity {
                     });
         }
     }
-
-
-
-
-
-
-
-
-
 
 
 

@@ -96,6 +96,7 @@
             android:layout_height="0dp"
             android:layout_weight="0.5" />
 
+
         <CheckBox
             android:id="@+id/cBstayconnect"
             android:layout_width="match_parent"
