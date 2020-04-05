@@ -2,6 +2,7 @@ package com.example.betaomer;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
@@ -14,8 +15,10 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.Date;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
@@ -26,7 +29,10 @@ import static com.example.betaomer.FBref.refEventt;
 
 public class Createevent extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    String name,date,id2;
+    private Date _date;
+
+    String eventdate;
+    String name,date,date2;
     ListView lw1;
     Button DateBtn,BtnCr;
     DatePickerDialog dpd;
@@ -36,8 +42,6 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
     ArrayList<String> ars;
 
 
-    //String [] ArrayList = {"Meat - ","Salad - ","Chicken - ","Fish - ","Asian - ","Pasta - ","Fried - "};
-    //String [] Sidor = {};
     ArrayAdapter<String> adp;
 
 
@@ -45,6 +49,7 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_createevent);
+
 
 
         BtnCr = (Button) findViewById(R.id.btnCr);
@@ -56,10 +61,10 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
         ars = new ArrayList<>();
         ars.add("Meat - ");
         ars.add("Salad - ");
-        ars.add("Chicken - ");
+        ars.add("Breads - ");
         ars.add("Fish - ");
         ars.add("Asian - ");
-        ars.add("Pasta - ");
+        ars.add("Carbohydrates - ");
         ars.add("Fried - ");
         lw1.setOnItemClickListener(this);
         adp = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, ars);
@@ -81,9 +86,13 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
                     @Override
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
-
                         Toast.makeText(Createevent.this, "" + dayOfMonth + "/" + (month + 1) + "/" + year, Toast.LENGTH_SHORT).show();
-                        TVD.setText(dayOfMonth + "/" + (month + 1) + "/" + year);
+                        eventdate="" + year + "_" + (month + 1) + "_" + dayOfMonth;
+                        TVD.setText(eventdate);
+
+                        _date = new Date(year,month,dayOfMonth);
+
+
                     }
                 }, day, month, year);
                 dpd.show();
@@ -135,10 +144,11 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
 
     public void BtnCr(View view) {
 
-       date=TVD.getText().toString();
-         Eventt=new Eventt(date, ars);
-        refEventt.child(date).setValue(Eventt);
+        Eventt = new Eventt(eventdate, ars, _date);
+        refEventt.child(eventdate).setValue(Eventt);
         Toast.makeText(this, "Successful registration", Toast.LENGTH_LONG).show();
 
+        Intent t=new Intent(Createevent.this,Loginok.class);
+        startActivity(t);
     }
 }

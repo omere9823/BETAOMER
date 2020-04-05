@@ -70,7 +70,7 @@ public class MainActivity extends AppCompatActivity {
         super.onStart();
         SharedPreferences settings=getSharedPreferences("PREFS_NAME",MODE_PRIVATE);
         Boolean isChecked=settings.getBoolean("stayConnect",false);
-        Intent si = new Intent(MainActivity.this,Loginok.class);
+        Intent si = new Intent(MainActivity.this,Choice.class);
         if (refAuth.getCurrentUser()!=null && isChecked) {
             stayConnect=true;
             startActivity(si);
@@ -138,7 +138,7 @@ public class MainActivity extends AppCompatActivity {
                                 editor.commit();
                                 Log.d("MainActivity", "signinUserWithEmail:success");
                                 Toast.makeText(MainActivity.this, "Login Success", Toast.LENGTH_LONG).show();
-                                Intent si = new Intent(MainActivity.this,Loginok.class);
+                                Intent si = new Intent(MainActivity.this,Choice.class);
                                 startActivity(si);
                             } else {
                                 Log.d("MainActivity", "signinUserWithEmail:fail");
@@ -169,7 +169,7 @@ public class MainActivity extends AppCompatActivity {
                                 userdb=new User(name,email,phone,uid);
                                 refUsers.child(uid).setValue(userdb);
                                 Toast.makeText(MainActivity.this, "Successful registration", Toast.LENGTH_LONG).show();
-                                Intent si = new Intent(MainActivity.this,Loginok.class);
+                                Intent si = new Intent(MainActivity.this,Choice.class);
                                 startActivity(si);
                             } else {
                                 if (task.getException() instanceof FirebaseAuthUserCollisionException)

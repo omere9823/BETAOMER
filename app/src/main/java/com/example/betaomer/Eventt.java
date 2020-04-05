@@ -1,10 +1,12 @@
 package com.example.betaomer;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 public class Eventt {
 
     String date,uid2;
+    private Date date2;
     //ArrayAdapter<String> adp;
     //String[] ArrayList;
     ArrayList<String> ars;
@@ -13,10 +15,22 @@ public class Eventt {
     public Eventt(String date, ArrayList<String> ars){
         this.date=date;
         this.ars = ars;
-        this.uid2=uid2;
 
         //this.adp = adp;
         //this.ArrayList = ArrayList;
+    }
+
+    public Eventt(String date, ArrayList<String> ars, Date dt){
+        this.date=date;
+        this.ars = ars;
+        this.date2 = dt;
+
+        //this.adp = adp;
+        //this.ArrayList = ArrayList;
+    }
+
+    public Date getDate2(){
+        return date2;
     }
 
     public String getDate() {
@@ -35,13 +49,7 @@ public class Eventt {
         this.ars = ars;
     }
 
-    public String getUid() {
-        return uid2;
-    }
 
-    public void setUid(String uid) {
-        this.uid2=uid;
-    }
     /* public String[] getArrayList() {
         return ArrayList;
     }
