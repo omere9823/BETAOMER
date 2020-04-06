@@ -29,7 +29,6 @@ import static com.example.betaomer.FBref.refEventt;
 
 public class Createevent extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
-    private Date _date;
 
     String eventdate;
     String name,date,date2;
@@ -78,7 +77,7 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
             public void onClick(View view) {
 
                 c = Calendar.getInstance();
-                int day = c.get(Calendar.DAY_OF_MONTH);
+                final int day = c.get(Calendar.DAY_OF_MONTH);
                 int month = c.get(Calendar.MONTH);
                 int year = c.get(Calendar.YEAR);
 
@@ -87,11 +86,18 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
                         Toast.makeText(Createevent.this, "" + dayOfMonth + "/" + (month + 1) + "/" + year, Toast.LENGTH_SHORT).show();
-                        eventdate="" + year + "_" + (month + 1) + "_" + dayOfMonth;
+                        if (month<10) {
+                            if (dayOfMonth<10) {
+                                eventdate="" + year + "_0" + (month+1) + "_0" + dayOfMonth;
+                            } else {
+                                eventdate="" + year + "_0" + (month+1) + "_" + dayOfMonth;
+                            }
+                        } else if (dayOfMonth<10) {
+                                eventdate="" + year + "_" + (month+1) + "_0" + dayOfMonth;
+                            } else {
+                                eventdate="" + year + "_" + (month+1) + "_" + dayOfMonth;
+                        }
                         TVD.setText(eventdate);
-
-                        _date = new Date(year,month,dayOfMonth);
-
 
                     }
                 }, day, month, year);
@@ -124,7 +130,6 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
                 ars.set(position, ars.get(position) + name);
                 lw1.setAdapter(adp);
 
-
             }
 
 
@@ -144,7 +149,7 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
 
     public void BtnCr(View view) {
 
-        Eventt = new Eventt(eventdate, ars, _date);
+        Eventt = new Eventt(eventdate, ars);
         refEventt.child(eventdate).setValue(Eventt);
         Toast.makeText(this, "Successful registration", Toast.LENGTH_LONG).show();
 
