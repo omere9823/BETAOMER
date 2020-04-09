@@ -1,32 +1,30 @@
 package com.example.betaomer;
 
+import com.example.betaomer.model.Station;
+
 import java.util.ArrayList;
 import java.util.Date;
 
 public class Eventt {
 
-    String date,uid2;
+    String date;
     private Date date2;
     //ArrayAdapter<String> adp;
     //String[] ArrayList;
-    ArrayList<String> ars;
+    ArrayList<Station> ars;
 
     public Eventt(){}
-    public Eventt(String date, ArrayList<String> ars){
+    public Eventt(String date, ArrayList<Station> ars){
         this.date=date;
         this.ars = ars;
 
-        //this.adp = adp;
-        //this.ArrayList = ArrayList;
     }
 
-    public Eventt(String date, ArrayList<String> ars, Date dt){
+    public Eventt(String date, ArrayList<Station> ars, Date dt){
         this.date=date;
         this.ars = ars;
-        this.date2 = dt;
 
-        //this.adp = adp;
-        //this.ArrayList = ArrayList;
+
     }
 
     public Date getDate2(){
@@ -41,27 +39,13 @@ public class Eventt {
         this.date = date;
     }
 
-    public ArrayList<String> getArs() {
+    public ArrayList<Station> getArs() {
         return ars;
     }
 
-    public void setArs(ArrayList<String> ars) {
+    public void setArs(ArrayList<Station> ars) {
         this.ars = ars;
     }
 
 
-    /* public String[] getArrayList() {
-        return ArrayList;
-    }
-
-    public void setArrayList(String[] arrayList) {
-        ArrayList = arrayList;
-    }*/
-    /*public ArrayAdapter<String> getAdp() {
-        return adp;
-    }
-
-    public void setAdp(ArrayAdapter<String> adp) {
-        this.adp = adp;
-    }*/
 }

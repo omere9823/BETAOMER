@@ -15,6 +15,8 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.betaomer.model.Station;
+
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -27,19 +29,20 @@ import static com.example.betaomer.FBref.refEventt;
 
 
 
-public class Createevent extends AppCompatActivity implements AdapterView.OnItemClickListener {
+public class Createevent extends AppCompatActivity /*implements AdapterView.OnItemClickListener*/ {
 
 
     String eventdate;
     String name,date,date2;
     ListView lw1;
-    Button DateBtn,BtnCr;
+    Button DateBtn ,BtnCr ,BtnAdd;
     DatePickerDialog dpd;
     Calendar c;
     TextView TVD;
     Eventt Eventt;
     ArrayList<String> ars;
 
+    ArrayList<Station> stations;
 
     ArrayAdapter<String> adp;
 
@@ -50,7 +53,7 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
         setContentView(R.layout.activity_createevent);
 
 
-
+        BtnAdd = (Button) findViewById(R.id.btnAdd);
         BtnCr = (Button) findViewById(R.id.btnCr);
         TVD = (TextView) findViewById(R.id.TVD);
         lw1 = (ListView) findViewById(R.id.lw1);
@@ -58,17 +61,18 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
 
 
         ars = new ArrayList<>();
-        ars.add("Meat - ");
-        ars.add("Salad - ");
-        ars.add("Breads - ");
-        ars.add("Fish - ");
-        ars.add("Asian - ");
-        ars.add("Carbohydrates - ");
-        ars.add("Fried - ");
-        lw1.setOnItemClickListener(this);
-        adp = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, ars);
-        lw1.setAdapter(adp);
+        stations = new ArrayList<>();
 
+        // OPEN DIALOG - WHEN "Create station" button click
+        // ASK FOR (Station name) and (Employer name) - "salad - omri"
+        // APPROVE - SUBMIT
+        //stations.add(new Station("name"));
+        //
+
+
+
+       //adp = new ArrayAdapter<Station>(this, R.layout.support_simple_spinner_dropdown_item, stations);
+        //lw1.setAdapter(adp);
 
 
 
@@ -86,7 +90,7 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
                         Toast.makeText(Createevent.this, "" + dayOfMonth + "/" + (month + 1) + "/" + year, Toast.LENGTH_SHORT).show();
-                        if (month<10) {
+                        if (month<9) {
                             if (dayOfMonth<10) {
                                 eventdate="" + year + "_0" + (month+1) + "_0" + dayOfMonth;
                             } else {
@@ -113,8 +117,39 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
         return true;
     }
 
+    public void BtnAD(View view) {
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        final EditText edittext = new EditText(this);
+        adb.setMessage("enter the name");
+        adb.setTitle("Position and Worker");
+        adb.setView(edittext);
 
-    @Override
+
+
+        adp=new ArrayAdapter<String> (this,R.layout.support_simple_spinner_dropdown_item,ars);
+
+        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        name = edittext.getText().toString();
+                        ars.add(name);
+                        stations.add(new Station(name));
+                        lw1.setAdapter(adp);
+
+                    }
+
+                }
+        );
+        adb.setNegativeButton("BACK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+        AlertDialog ad = adb.create();
+        ad.show();
+
+    }
+
+
+    /*@Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
         AlertDialog.Builder adb = new AlertDialog.Builder(this);
         final EditText edittext = new EditText(this);
@@ -145,15 +180,23 @@ public class Createevent extends AppCompatActivity implements AdapterView.OnItem
 
 
     }
-
+*/
 
     public void BtnCr(View view) {
 
-        Eventt = new Eventt(eventdate, ars);
-        refEventt.child(eventdate).setValue(Eventt);
+        Eventt = new Eventt(eventdate, stations);
+        try{
+            refEventt.child(eventdate).setValue(Eventt);
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
         Toast.makeText(this, "Successful registration", Toast.LENGTH_LONG).show();
 
         Intent t=new Intent(Createevent.this,Loginok.class);
         startActivity(t);
+
+        // TODO need to finish() acvitiy
     }
+
 }

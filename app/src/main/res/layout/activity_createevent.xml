@@ -35,23 +35,33 @@
     <ListView
         android:id="@+id/lw1"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_weight="1">
+        android:layout_height="0dp"
+        android:layout_weight="6">
 
     </ListView>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="120dp"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <Button
+            android:id="@+id/btnCr"
+            android:onClick="BtnCr"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Create event" />
+
+        <Button
+            android:id="@+id/btnAdd"
+            android:onClick="BtnAD"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:text="Add position" />
+
 
     </LinearLayout>
-
-    <Button
-        android:onClick="BtnCr"
-        android:id="@+id/btnCr"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:text="Create" />
-
 </LinearLayout>

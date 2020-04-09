@@ -14,6 +14,7 @@ import android.widget.ListView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.betaomer.model.Station;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.Query;
@@ -23,6 +24,7 @@ import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
@@ -86,13 +88,21 @@ public class Worker extends AppCompatActivity implements AdapterView.OnItemClick
             if (dS.exists()) {
                 als.clear();
                 aleventt.clear();
+
+                List<String> strings  = new ArrayList<>();
                 for(DataSnapshot data : dS.getChildren()) {
                     str1 = (String) data.getKey();
+
                     Eventt eventt = data.getValue(Eventt.class);
-//                    aleventt.add(eventt);
-                    als = eventt.getArs();
+                    ArrayList<Station> arrayList = eventt.ars;
+
+                    strings = new ArrayList<>(arrayList.size());
+                    for (Station station : arrayList) {
+                        strings.add(station != null ? station.toString() : null);
+                    }
+
                 }
-                adp = new ArrayAdapter<String>(Worker.this, R.layout.support_simple_spinner_dropdown_item, als);
+                adp = new ArrayAdapter<String>(Worker.this, R.layout.support_simple_spinner_dropdown_item, strings);
                 lv.setAdapter(adp);
             }
         }
