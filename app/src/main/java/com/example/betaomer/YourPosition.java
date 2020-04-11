@@ -1,7 +1,9 @@
 package com.example.betaomer;
 
+import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.View;
@@ -12,25 +14,37 @@ import android.widget.EditText;
 import android.widget.ListView;
 import android.widget.Toast;
 
+import com.example.betaomer.model.Ingrediant;
+import com.example.betaomer.model.Station;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.Query;
+import com.google.firebase.database.ValueEventListener;
+
 import java.util.ArrayList;
 
+import static com.example.betaomer.FBref.refEventt;
+
 public class YourPosition extends AppCompatActivity implements AdapterView.OnItemClickListener {
+
+    private ArrayList<Ingrediant> ingrediantArrayList ;
 
     EditText eTfood;
     Button btnAddfood;
     String newfood;
-    ArrayList<String> ars = new ArrayList<String>();
     ListView lv2;
-    int choose;
-    ArrayList<String> als = new ArrayList<>();
     ArrayList<String> sr = new ArrayList<>();;
-    ArrayAdapter<CharSequence> adp;
     ArrayAdapter<String> adpp;
+    private String _event_date;
+    private int _station_position;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_position);
+
+        this.ingrediantArrayList = new ArrayList<Ingrediant>();
 
 
         btnAddfood=(Button)findViewById(R.id.btnAddfood);
@@ -38,53 +52,11 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
         lv2 = findViewById(R.id.lvE);
 
         Intent dt = getIntent();
-        choose = dt.getIntExtra("emda", 999);
 
-        Toast.makeText(YourPosition.this, "" + choose, Toast.LENGTH_LONG).show();
+        _event_date = dt.getStringExtra("event_date");
+        _station_position = dt.getIntExtra("station_position",0);
 
-        if (choose==0){
-            als.add("Asado");
-            als.add("pargit");
-            als.add("Wings");
-            sr=als;
-        }
-        if (choose == 1){
-            als.add("");
-            als.add("pargit");
-            als.add("Wings");
-            sr=als;
-        }
-        if (choose == 2){
-            als.add("Asado");
-            als.add("pargit");
-            als.add("Wings");
-            sr=als;
-        }
-        if (choose == 3){
-            als.add("Asado");
-            als.add("pargit");
-            als.add("Wings");
-            sr=als;
-        }
-        if (choose == 4){
-            als.add("Asado");
-            als.add("pargit");
-            als.add("Wings");
-            sr=als;
-        }
-        if (choose == 5){
-            als.add("Asado");
-            als.add("pargit");
-            als.add("Wings");
-            sr=als;
-        }
-        if (choose == 6){
-            als.add("Asado");
-            als.add("pargit");
-            als.add("Wings");
-            sr=als;
-        }
-        lv2.setAdapter(adp);
+
         adpp = new ArrayAdapter<String>(YourPosition.this, R.layout.support_simple_spinner_dropdown_item, sr);
         lv2.setAdapter(adpp);
 
@@ -109,28 +81,47 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
 
     public void AddFood(View view) {
         newfood = eTfood.getText().toString();
-        als.add(newfood);
+        Ingrediant ingrediant = new Ingrediant(newfood);
+        this.ingrediantArrayList.add(ingrediant);
+        sr.add(ingrediant.toString());
+        adpp.notifyDataSetChanged();
 
-        /*
-        TODO :
-        1. add string to als as (TOMATO - FULL)
-        2. add object to ArrayList of ingrediatns - New Ingrdiat(newfood)
-         */
-
-
-        // TOMATO - FULL
-        //String s = "TOMATO - FULL";
-        //String arr[] = s.split(" - ");
-       //  arr[0] = TOMATO
-        // arr[1] = FULL
-
-        //String status = "MEDIUM";
-        //String newS = arr[0]+" - "+status;
 
 
     }
 
     public void Finish(View view) {
+
+        try {
+            final Context context  = this;
+            final DatabaseReference dr1 = refEventt.child(_event_date)
+                    .child("ars")
+                    .child(String.valueOf(_station_position));
+
+            Query query = dr1;
+            query.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if(dataSnapshot.exists()){
+                        Station station2 = dataSnapshot.getValue(Station.class);
+                        station2.set_array(ingrediantArrayList);
+                        dr1.setValue(station2);
+                        Toast.makeText(context,"OK",Toast.LENGTH_SHORT).show();
+
+                    }
+                }
+
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
+
+                }
+            });
+
+
+
+        } catch (Exception e){
+            e.printStackTrace();
+        }
 
         /*
         TODO :
@@ -139,7 +130,6 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
         3. Save to firebase using setValue();
         4. TOAST for any result (GOOD / BAD) + exception
          */
-
     }
 }
 

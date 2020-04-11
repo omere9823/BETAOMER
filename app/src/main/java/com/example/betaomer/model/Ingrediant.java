@@ -3,37 +3,44 @@ package com.example.betaomer.model;
 import java.io.Serializable;
 
 public class Ingrediant implements Serializable {
-    static enum status  {
+    /*static enum status  {
             FULL,
             MEDIUM,
             LOW,
             EMPTY
     };
 
+     */
+
     private String _name;
-    private status _status;
+    private String _status;
 
     public Ingrediant(){}
 
-    public Ingrediant(String name){
-        this._name = _name;
-        this._status = status.FULL;
+    public Ingrediant(String n){
+        this._name = n;
+        this._status = "FULL";
     }
 
-    public String get_name(){
-        return this._name;
-    }
-    public status get_status(){
+    public String get_status(){
         return this._status;
     }
 
-    public void set_status(status s){
+    public void set_status(String s){
         this._status = s;
+    }
+
+
+    public String get_name(){
+        return this._name;
     }
 
     public void set_name(String nam){
         this._name = nam;
     }
 
-
+    @Override
+    public String toString(){
+        return this._name + " - "+ this._status;
+    }
 }

@@ -9,8 +9,7 @@ public class Eventt {
 
     String date;
     private Date date2;
-    //ArrayAdapter<String> adp;
-    //String[] ArrayList;
+
     ArrayList<Station> ars;
 
     public Eventt(){}

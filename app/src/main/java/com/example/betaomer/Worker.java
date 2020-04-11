@@ -3,6 +3,7 @@ package com.example.betaomer;
 import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Parcelable;
 import android.renderscript.Sampler;
 import android.view.Menu;
 import android.view.View;
@@ -17,9 +18,11 @@ import android.widget.Toast;
 import com.example.betaomer.model.Station;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
+import java.io.Serializable;
 import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
@@ -111,11 +114,41 @@ public class Worker extends AppCompatActivity implements AdapterView.OnItemClick
         }
     };
 
-    public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
         alls = position;
-        Intent t=new Intent(this,YourPosition.class);
-        t.putExtra("emda",alls);
-        startActivity(t);
+        final Intent t=new Intent(this,YourPosition.class);
+        //t.putExtra("emda",alls);
+
+        Query query3 = refEventt.orderByChild("date").startAt(dateToday).limitToFirst(1);
+        query3.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                if (dataSnapshot.exists()) {
+                    String date = "";
+
+                    for (DataSnapshot sd : dataSnapshot.getChildren()){
+                        Eventt event = sd.getValue(Eventt.class);
+                        date = event.getDate();
+                        break;
+                    }
+                    //DatabaseReference dr1 = refEventt.orderByChild("date").startAt(dateToday).limitToFirst(1).getRef();
+                    //DatabaseReference dr2 = dr1.limitToFirst(1).getRef();
+                    //DatabaseReference dr3 = dr2.child(date);
+                    //DatabaseReference dr4 = dr3.child("ars"); // []
+
+                    t.putExtra("event_date", date);
+                    t.putExtra("station_position",position);  // 0,1
+
+                    startActivity(t);
+                }
+            }
+
+            @Override
+            public void onCancelled(@NonNull DatabaseError databaseError) {
+
+            }
+        });
+        //startActivity(t);
 
     }
 
