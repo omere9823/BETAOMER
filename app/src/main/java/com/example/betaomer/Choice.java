@@ -1,15 +1,18 @@
 package com.example.betaomer;
 
-import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-
+import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
 import android.widget.EditText;
+import android.widget.Toast;
+
+import androidx.appcompat.app.AlertDialog;
+import androidx.appcompat.app.AppCompatActivity;
 
 public class Choice extends AppCompatActivity {
+    String code = "12345";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -32,7 +35,32 @@ public class Choice extends AppCompatActivity {
 
 
     public void ImM(View view) {
-        Intent t=new Intent(Choice.this,Loginok.class);
-        startActivity(t);
+        AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        final EditText edittext = new EditText(this);
+        adb.setMessage("enter the code");
+        adb.setTitle("manager access");
+        adb.setView(edittext);
+
+
+        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int whichButton) {
+                        String codereceived = edittext.getText().toString();
+                        if (code.equals(codereceived)){
+                            Intent t=new Intent(Choice.this,Loginok.class);
+                            startActivity(t);
+                        } else {
+                            Toast.makeText(Choice.this, "Your code is incorrect", Toast.LENGTH_LONG).show();
+                        }
+                    }
+
+                }
+        );
+        adb.setNegativeButton("BACK", new DialogInterface.OnClickListener() {
+            public void onClick(DialogInterface dialog, int whichButton) {
+            }
+        });
+        AlertDialog ad = adb.create();
+        ad.show();
+
     }
 }

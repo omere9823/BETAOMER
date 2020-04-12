@@ -2,11 +2,9 @@ package com.example.betaomer;
 
 import android.app.DatePickerDialog;
 import android.content.DialogInterface;
-import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.View;
-import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.DatePicker;
@@ -17,13 +15,12 @@ import android.widget.Toast;
 
 import com.example.betaomer.model.Station;
 
-import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
 import static com.example.betaomer.FBref.refEventt;
 
 
@@ -192,11 +189,8 @@ public class Createevent extends AppCompatActivity /*implements AdapterView.OnIt
         }
 
         Toast.makeText(this, "Successful registration", Toast.LENGTH_LONG).show();
+        finish();
 
-        Intent t=new Intent(Createevent.this,Loginok.class);
-        startActivity(t);
-
-        // TODO need to finish() acvitiy
     }
 
 }

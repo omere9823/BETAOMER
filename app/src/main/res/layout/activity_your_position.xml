@@ -35,7 +35,7 @@
             android:layout_weight="4"
             android:ems="10"
             android:inputType="textPersonName"
-            android:text="A New Food" />
+            android:hint="A New Food" />
 
         <Button
             android:id="@+id/btnAddfood"
