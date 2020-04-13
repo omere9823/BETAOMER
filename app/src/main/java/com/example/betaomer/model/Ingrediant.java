@@ -12,8 +12,8 @@ public class Ingrediant implements Serializable {
 
      */
 
-    private String _name;
-    private String _status;
+    String _name;
+    String _status;
 
     public Ingrediant(){}
 

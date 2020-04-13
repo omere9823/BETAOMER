@@ -9,10 +9,6 @@ import androidx.appcompat.app.AppCompatActivity;
 
 public class Loginok extends AppCompatActivity {
 
-
-
-
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -32,5 +28,9 @@ public class Loginok extends AppCompatActivity {
     }
 
 
-
+    public void LiveEvent(View view) {
+        Intent t=new Intent(Loginok.this, PositionsStatus.class);
+        t.putExtra("title","2020_08_13");
+        startActivity(t);
+    }
 }

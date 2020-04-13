@@ -9,7 +9,11 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".YourPosition"></activity>
+        <activity
+            android:name=".PositionsStatus"
+            android:label="@string/title_activity_positions_status"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
+        <activity android:name=".YourPosition" />
         <activity android:name=".Choice" />
         <activity android:name=".Worker" />
         <activity android:name=".Createevent" />

@@ -2,10 +2,11 @@ package com.example.betaomer;
 
 import com.example.betaomer.model.Station;
 
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Date;
 
-public class Eventt {
+public class Eventt implements Serializable {
 
     String date;
     private Date date2;
@@ -42,9 +43,13 @@ public class Eventt {
         return ars;
     }
 
-    public void setArs(ArrayList<Station> ars) {
+    //public void setArs(ArrayList<Station> ars) {
+        //this.ars = ars;
+    //}
+    public void set_ars(ArrayList<Station> ars) {
         this.ars = ars;
     }
+
 
 
 }
