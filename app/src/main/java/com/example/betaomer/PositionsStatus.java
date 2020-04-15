@@ -3,6 +3,8 @@ package com.example.betaomer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Gravity;
+import android.view.View;
 import android.widget.TableLayout;
 import android.widget.TableRow;
 import android.widget.TextView;
@@ -17,11 +19,13 @@ import com.google.firebase.database.ValueEventListener;
 import java.util.ArrayList;
 
 import androidx.annotation.NonNull;
+
 import static com.example.betaomer.FBref.refEventt;
 
 
 public class PositionsStatus extends Activity {
     private TableLayout tableLayout;
+    private TableRow.LayoutParams tvp;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -42,8 +46,12 @@ public class PositionsStatus extends Activity {
         //fillTitleFromStation(null);
         //fillIngrediants(null);
 
+        this.tvp = new TableRow.LayoutParams(this,null);
+        this.tvp.width = TableRow.LayoutParams.FILL_PARENT;
+        this.tvp.height = TableRow.LayoutParams.WRAP_CONTENT;
 
-        final Query query =  refEventt.child("2020_08_13").child("ars");
+
+        final Query query =  refEventt.child("2020_08_20").child("ars");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -99,43 +107,76 @@ public class PositionsStatus extends Activity {
     }
 
     private void fillTitleFromStation(Station station){
+        // create layout params for textview
+        TableRow.LayoutParams params = new TableRow.LayoutParams(this,null);
+        params.span = 2;
+        params.width = TableRow.LayoutParams.FILL_PARENT;
+        params.height = TableRow.LayoutParams.WRAP_CONTENT;
+        params.gravity = Gravity.CENTER;
+
+        // create text view
         TextView textView = new TextView(this);
         textView.setText(station.get_name());
-        textView.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-        textView.setPadding(4,4,4,4);
+        textView.setTextColor(getResources().getColor(R.color.colorPrimary));
+        //textView.setPadding(0,10,0,10);
+        textView.setLayoutParams(params); // causes layout update
 
+
+        // set layout params for row
+        TableRow.LayoutParams newHead = new TableRow.LayoutParams(this,null);
+        newHead.width = TableRow.LayoutParams.FILL_PARENT;
+        newHead.height = TableRow.LayoutParams.WRAP_CONTENT;
+        //newHead.setMargins(10,10,10,10);
+
+        // set row
         TableRow tableRow = new TableRow(this);
-        tableRow.setHorizontalGravity(1);
-        tableRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, TableRow.LayoutParams.MATCH_PARENT));
+        tableRow.setLayoutParams(newHead);
+        tableRow.setBackgroundColor(getResources().getColor(R.color.colorAccent));
 
+        // add textview to row
         tableRow.addView(textView);
 
-        //this.tableLayout.removeAllViews();
+        // add row to table
         this.tableLayout.addView(tableRow);
-        //this.tableLayout.addView(tableRow, new TableLayout.LayoutParams(TableLayout.LayoutParams.FILL_PARENT, TableLayout.LayoutParams.WRAP_CONTENT));
     }
 
     private void fillIngrediants(ArrayList<Ingrediant> arrayList){
-        TextView textView = new TextView(this);
-        textView.setText("Tomato");
-        textView.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-        textView.setPadding(4,4,4,4);
 
-        TextView textView2 = new TextView(this);
-        textView2.setText("FULL");
-        textView2.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, TableRow.LayoutParams.WRAP_CONTENT));
-        textView2.setPadding(4,4,4,4);
+        for(Ingrediant ingrediant : arrayList){
+            // First CELL
+            TextView textView = new TextView(this);
+            textView.setText(ingrediant.get_name());
+            textView.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            textView.setLayoutParams(this.tvp);
+            //textView.setPadding(0,10,0,10);
 
+            // Second CELL
+            TextView textView2 = new TextView(this);
+            textView2.setText(ingrediant.get_status());
+            textView2.setTextAlignment(View.TEXT_ALIGNMENT_CENTER);
+            textView2.setLayoutParams(this.tvp);
+            //textView.setPadding(0,10,0,10);
+            switch (ingrediant.get_status()){
+                case "FULL" : textView2.setBackgroundColor(getResources().getColor(R.color.full)); break;
+                case "MED" : textView2.setBackgroundColor(getResources().getColor(R.color.med)); break;
+                case "LOW" : textView2.setBackgroundColor(getResources().getColor(R.color.low)); break;
+                case "EMPTY" : textView2.setBackgroundColor(getResources().getColor(R.color.empty)); break;
+                default: break;
+            }
 
-        TableRow tableRow = new TableRow(this);
-        tableRow.setHorizontalGravity(1);
-        tableRow.setLayoutParams(new TableRow.LayoutParams(TableRow.LayoutParams.FILL_PARENT, TableRow.LayoutParams.MATCH_PARENT));
+            // set row
+            TableRow tableRow = new TableRow(this);
+            tableRow.setLayoutParams(this.tvp);
 
-        tableRow.addView(textView);
-        tableRow.addView(textView2);
+            // add cells to row
+            tableRow.addView(textView);
+            tableRow.addView(textView2);
+
+            // add row to table
+            this.tableLayout.addView(tableRow);
+        }
 
         //this.tableLayout.removeAllViews();
-        this.tableLayout.addView(tableRow);
     }
 
 }
