@@ -5,15 +5,25 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layoutDirection="ltr"
+    android:background="@drawable/background2"
     tools:context=".Choice">
 
-    <TextView
-        android:id="@+id/tv5"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:gravity="center"
-        android:textSize="25dp"
-        android:text="Who Are You?" />
+        android:layout_height="57dp"
+        android:orientation="vertical">
+    </LinearLayout>
+
+    <ImageView
+        android:id="@+id/imageView2"
+        android:layout_width="200dp"
+        android:layout_height="140dp"
+
+        android:layout_gravity="center"
+        app:srcCompat="@drawable/titlephoto" />
+
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -30,7 +40,8 @@
         android:gravity="center"
         android:onClick="ImW"
         android:text="worker"
-        android:textSize="20dp" />
+        android:textColor="#feffff"
+        android:background="@drawable/button_rouns2" />
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -44,6 +55,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="20dp"
+        android:textStyle="bold"
+        android:textColor="#feffff"
         android:text="or"/>
 
     <LinearLayout
@@ -61,7 +74,8 @@
         android:gravity="center"
         android:onClick="ImM"
         android:text="manager"
-        android:textSize="20dp" />
+        android:textColor="#feffff"
+        android:background="@drawable/button_rouns2" />
 
 
 </LinearLayout>

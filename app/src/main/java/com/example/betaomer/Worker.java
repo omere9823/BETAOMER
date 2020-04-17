@@ -1,43 +1,36 @@
 package com.example.betaomer;
 
-import android.app.DatePickerDialog;
 import android.content.Intent;
 import android.os.Bundle;
-import android.os.Parcelable;
-import android.renderscript.Sampler;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
-import android.widget.Button;
-import android.widget.DatePicker;
 import android.widget.ListView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.example.betaomer.model.Station;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
-import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
-import java.io.Serializable;
-import java.text.DateFormat;
 import java.util.ArrayList;
 import java.util.Calendar;
-import java.util.Date;
 import java.util.List;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
+
 import static com.example.betaomer.FBref.refEventt;
 
 public class Worker extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 
     String  str1, str2, chose, dateToday;
-    TextView tvdate;
+    String date;
+    TextView  tVsubTitle;
     ListView lv;
     Calendar c;
     ArrayList<String> als = new ArrayList<String>();
@@ -52,7 +45,7 @@ public class Worker extends AppCompatActivity implements AdapterView.OnItemClick
         setContentView(R.layout.activity_worker);
 
 
-        tvdate = (TextView) findViewById(R.id.tvdate);
+        tVsubTitle = (TextView) findViewById(R.id.tVsubTitle);
         lv = findViewById(R.id.lv);
 
         lv.setOnItemClickListener(Worker.this);
@@ -77,7 +70,6 @@ public class Worker extends AppCompatActivity implements AdapterView.OnItemClick
         }
 
 
-        tvdate.setText(dateToday);
 
         Query query =  refEventt.orderByChild("date").startAt(dateToday).limitToFirst(1);
         query.addListenerForSingleValueEvent(VEL);
@@ -97,6 +89,9 @@ public class Worker extends AppCompatActivity implements AdapterView.OnItemClick
                     str1 = (String) data.getKey();
 
                     Eventt eventt = data.getValue(Eventt.class);
+                    date = eventt.getDate();
+                    date = date.replace('_','/');
+                    tVsubTitle.setText("Your closest event: " + date);
                     ArrayList<Station> arrayList = eventt.ars;
 
                     strings = new ArrayList<>(arrayList.size());
@@ -154,13 +149,25 @@ public class Worker extends AppCompatActivity implements AdapterView.OnItemClick
 
 
     public boolean onCreateOptionsMenu (Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
+
+        getMenuInflater().inflate(R.menu.main,menu);
+
+        return true;
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        String str = item.getTitle().toString();
+
+        if (str.equals("Credits")) {
+
+            Intent t = new Intent(this,Credits.class);
+            startActivity(t);
+        }
 
         return true;
     }
 
 }
 
-/*public static void btnRed(View view){
-    //ars.set(position,Emdot.get(position)+"Empty")
-}*/

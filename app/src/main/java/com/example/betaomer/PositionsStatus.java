@@ -3,6 +3,7 @@ package com.example.betaomer;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.view.Gravity;
 import android.view.View;
 import android.widget.TableLayout;
@@ -17,11 +18,12 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
+import java.util.Timer;
+import java.util.TimerTask;
 
 import androidx.annotation.NonNull;
 
 import static com.example.betaomer.FBref.refEventt;
-
 
 public class PositionsStatus extends Activity {
     private TableLayout tableLayout;
@@ -38,9 +40,9 @@ public class PositionsStatus extends Activity {
 
         Intent dt = getIntent();
 
-        String titleraw = dt.getStringExtra("title");
-        titleraw = titleraw.replace('_','/');
-        title.setText(String.format("Event day - %s", titleraw));
+        final String titleraw = dt.getStringExtra("title");
+        String titleraw2 = titleraw.replace('_','/');
+        title.setText(String.format("Event day - %s", titleraw2));
 
         this.tableLayout.removeAllViews();
         //fillTitleFromStation(null);
@@ -51,11 +53,42 @@ public class PositionsStatus extends Activity {
         this.tvp.height = TableRow.LayoutParams.WRAP_CONTENT;
 
 
-        final Query query =  refEventt.child("2020_08_20").child("ars");
+        TimerTask scanTask;
+        final Handler handler = new Handler();
+        Timer t = new Timer();
+
+        scanTask = new TimerTask() {
+            public void run() {
+                handler.post(new Runnable() {
+                    public void run() {
+                        // run progress bar
+                        fetchResults(titleraw);
+
+                    }
+                });
+            }};
+        t.schedule(scanTask, 500,10000);  // here is t.schedule( , delay, period);
+
+
+
+        //fetch table to variable
+        // get event id from getContext() exats - string - "2024_07_24"
+        // query to get all the data
+        // fill table
+            // each station will have special header
+            // each station will print all ingrediant
+    }
+
+    private void fetchResults(String titleraw){
+
+
+        final Query query =  refEventt.child(titleraw).child("ars");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
+                    tableLayout.removeAllViews();
+                    // stop progress bar
                     ArrayList<Station> arrayList = new ArrayList<Station>();
                     for(DataSnapshot ds : dataSnapshot.getChildren()){
                         Station st = ds.getValue(Station.class);
@@ -66,17 +99,9 @@ public class PositionsStatus extends Activity {
                             arrayListIngrediants.add(ingrediant);
                         }
                         st.set_array(arrayListIngrediants);
-
-                        //arrayList.add(st);
                         fillTitleFromStation(st);
                         fillIngrediants(st.get_ingrediats());
                     }
-                    //Station arrayList [] = dataSnapshot.getValue(Station.class);
-                    //Query query2 =  query.getRef().child("ars");
-
-
-                    //Eventt eventt = dataSnapshot.getValue(Eventt.class);
-                    //handleEvent(eventt);
                 }
             }
 
@@ -86,14 +111,6 @@ public class PositionsStatus extends Activity {
             }
         });
 
-
-
-        //fetch table to variable
-        // get event id from getContext() exats - string - "2024_07_24"
-        // query to get all the data
-        // fill table
-            // each station will have special header
-            // each station will print all ingrediant
     }
 
     private void handleStations(ArrayList<Station> arrayList){}
@@ -176,7 +193,6 @@ public class PositionsStatus extends Activity {
             this.tableLayout.addView(tableRow);
         }
 
-        //this.tableLayout.removeAllViews();
     }
 
 }

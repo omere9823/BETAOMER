@@ -9,17 +9,18 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
+        <activity android:name=".Credits"></activity>
         <activity
             android:name=".PositionsStatus"
             android:label="@string/title_activity_positions_status"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
         <activity android:name=".YourPosition" />
         <activity android:name=".Choice" />
         <activity android:name=".Worker" />
         <activity android:name=".Createevent" />
-        <activity android:name=".Start" />
+        <activity android:name=".MainActivity" />
         <activity android:name=".Loginok" />
-        <activity android:name=".MainActivity">
+        <activity android:name=".Start">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 

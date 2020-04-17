@@ -1,4 +1,4 @@
-package com.example.betaomer;
+package com.example.betaomer.model;
 public class User {
 
 

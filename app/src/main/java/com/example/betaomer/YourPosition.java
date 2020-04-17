@@ -4,12 +4,15 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ListView;
+import android.widget.RadioGroup;
 import android.widget.Toast;
 
 import com.example.betaomer.model.Ingrediant;
@@ -29,12 +32,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import static com.example.betaomer.FBref.refEventt;
 
 public class YourPosition extends AppCompatActivity implements AdapterView.OnItemClickListener {
+    //private AlertDialog.Builder builder;
+    //private View dialogView;
+    //private RadioGroup group;
 
     ArrayList<Ingrediant> ingrediantArrayList ;
 
     EditText eTfood;
     Button btnAddfood;
-    String newfood;
+    String newfood ,status;
     ListView lv2;
     ArrayList<String> sr = new ArrayList<>();;
     ArrayAdapter<String> adpp;
@@ -45,6 +51,10 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_your_position);
+
+
+
+
 
         this.ingrediantArrayList = new ArrayList<Ingrediant>();
 
@@ -58,75 +68,102 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
         _event_date = dt.getStringExtra("event_date");
         _station_position = dt.getIntExtra("station_position",0);
 
-
-        adpp = new ArrayAdapter<String>(YourPosition.this, R.layout.support_simple_spinner_dropdown_item, sr);
-        lv2.setAdapter(adpp);
-
+        Query query =  refEventt.child(_event_date).child("ars").child(String.valueOf(_station_position)).child("_ingrediats");
+        query.addListenerForSingleValueEvent(VEL);
 
         lv2.setOnItemClickListener(YourPosition.this);
         lv2.setChoiceMode(ListView.CHOICE_MODE_SINGLE);
+
     }
 
+    com.google.firebase.database.ValueEventListener VEL = new ValueEventListener() {
+        @Override
+        public void onDataChange(@NonNull DataSnapshot dS) {
+            if (dS.exists()) {
+                //Station station = dS.getValue(Station.class);
 
-    /* public void func(final int position){
+                //List<String> strings  = new ArrayList<>();
+                for(DataSnapshot data : dS.getChildren()) {
+                    Ingrediant ingrediant = data.getValue(Ingrediant.class);
+                    ingrediantArrayList.add(ingrediant);
+                    sr.add(ingrediant.toString());
 
-        final CharSequence[] charSequences = { "FULL" , "MED","LOW","EMPTY"};
-        int choice ;
-        final int[] finalChoice = {0};
-        switch (this.ingrediantArrayList.get(position).get_status()){
-            case "FULL": choice = 0;break;
-            case "MED": choice = 1;break;
-            case "LOW": choice = 2;break;
-            case "EMPTY":choice=3;break;
-            default:choice=0;
+                }
+                adpp = new ArrayAdapter<String>(YourPosition.this, R.layout.support_simple_spinner_dropdown_item, sr);
+                lv2.setAdapter(adpp);
+            }
         }
-        AlertDialog.Builder adb2 = new AlertDialog.Builder(YourPosition.this);
-        adb2.setTitle("title");
-        adb2.setMessage("message");
-        adb2.setSingleChoiceItems(charSequences, 0, new DialogInterface.OnClickListener() {
+        @Override
+        public void onCancelled(@NonNull DatabaseError databaseError) {
+        }
+    };
+
+
+    private void func(final int position){
+        AlertDialog.Builder builder = new AlertDialog.Builder(this);
+        View dialogView = (View)getLayoutInflater().inflate(R.layout.dialog_status, null);
+        RadioGroup group = (RadioGroup)dialogView.findViewById(R.id.ds1);
+
+        group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
-            public void onClick(DialogInterface dialog, int which) {
-                finalChoice[0] = which;
+            public void onCheckedChanged(RadioGroup group, int checkedId) {
+                int choiceRaw = checkedId % 4;
+                switch (choiceRaw){
+                    case 1 :  status = "FULL"; break;
+                    case 2 :  status = "MED"; break;
+                    case 3 :  status = "LOW"; break;
+                    case 0 :  status = "EMPTY"; break;
+                    default: break;
+                }
+
+
             }
         });
-        adb2.setPositiveButton("OK", new DialogInterface.OnClickListener() {
+
+        builder.setView(dialogView);
+        builder.setTitle("Edit Ingrediant");
+        builder.setMessage("Enter new status");
+        builder.setPositiveButton("UPDATE", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
                 Ingrediant ingrediant = new Ingrediant(ingrediantArrayList.get(position).get_name());
-                switch ( finalChoice[0] ){
-                    case 0 : ingrediant.set_status("FULL"); break;
-                    case 1 : ingrediant.set_status("MED"); break;
-                    case 2 : ingrediant.set_status("LOW"); break;
-                    case 3 : ingrediant.set_status("EMPTY"); break;
-                    default: ingrediant.set_status("FULL");
-                }
+                ingrediant.set_status(status);
 
-                ingrediantArrayList.set(position,ingrediant);
-                sr.set(position,ingrediant.toString());
+                ingrediantArrayList.set(position, ingrediant);
+                sr.set(position, ingrediant.toString());
+
+                //group.clearCheck();
+                //group.removeView(dialogView);
 
                 adpp.notifyDataSetChanged();
             }
         });
-        adb2.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
+        builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-
+                //group.clearCheck();
+                //group.removeView(dialogView);
             }
         });
-        AlertDialog alertDialog = adb2.create();
-        alertDialog.show();
-    }*/
 
-    // https://stackoverflow.com/questions/32520850/create-a-custom-dialog-with-radio-buttons-list
+        AlertDialog dialog = builder.create();
+        dialog.show();
+
+        //group.removeView(dialogView);
+
+
+
+    }
 
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-        //func(position);
-
-          AlertDialog.Builder adb = new AlertDialog.Builder(this);
+        if (true)
+            func(position);
+        else {
+            AlertDialog.Builder adb = new AlertDialog.Builder(this);
             final EditText edittext = new EditText(this);
             edittext.setText(this.ingrediantArrayList.get(position).get_status());
 
-            adb.setMessage("Enter new status to "+this.ingrediantArrayList.get(position).get_name());
+            adb.setMessage("Enter new status to " + this.ingrediantArrayList.get(position).get_name());
             adb.setTitle("Edit Ingrediant");
             adb.setView(edittext);
 
@@ -136,8 +173,8 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
                             Ingrediant ingrediant = new Ingrediant(ingrediantArrayList.get(position).get_name());
                             ingrediant.set_status(status);
 
-                            ingrediantArrayList.set(position,ingrediant);
-                            sr.set(position,ingrediant.toString());
+                            ingrediantArrayList.set(position, ingrediant);
+                            sr.set(position, ingrediant.toString());
 
                             adpp.notifyDataSetChanged();
                         }
@@ -149,19 +186,9 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
             });
             AlertDialog ad = adb.create();
             ad.show();
+        }
 
     }
-
-        /*
-        TODO :
-        1. Open dialog and send item POSITION from ArrayList with als.get(2)
-           1.1.  From the dialog, get the text from als with the POSITION - "CARROT - FULL" - and put it inside textview
-           1.2   update string inside the textview
-        2. on "OK" click, set the value from the als by the POSITION with the new string - "CARROT - EMPTY"
-        3. if no change - adapter.updatePosition(3); // adapter.update(4)
-        4. update the ingrediants ArrayList by position
-         */
-
 
     public void AddFood(View view) {
         newfood = eTfood.getText().toString();
@@ -188,7 +215,7 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
                         Station station2 = dataSnapshot.getValue(Station.class);
                         station2.set_array(ingrediantArrayList);
                         dr1.setValue(station2);
-                        Toast.makeText(context,"OK",Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context,"Successfully updated",Toast.LENGTH_SHORT).show();
 
                     }
                 }
@@ -203,14 +230,29 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
             e.printStackTrace();
         }
 
-        /*
-        TODO :
-        1. Save ArrayList of ingrediant to firebase event->station->position refernece (got from arguments from getExtra)
-        2. Convert to to simple array
-        3. Save to firebase using setValue();
-        4. TOAST for any result (GOOD / BAD) + exception
-         */
     }
+
+    public boolean onCreateOptionsMenu (Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main,menu);
+
+        return true;
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        String str = item.getTitle().toString();
+
+        if (str.equals("Credits")) {
+
+            Intent t = new Intent(this,Credits.class);
+            startActivity(t);
+        }
+
+        return true;
+    }
+
 }
 
 

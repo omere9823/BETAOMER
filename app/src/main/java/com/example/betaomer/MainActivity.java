@@ -9,7 +9,6 @@ import android.text.Spanned;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
-import android.view.Menu;
 import android.view.View;
 import android.widget.Button;
 import android.widget.CheckBox;
@@ -17,6 +16,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.betaomer.model.User;
 import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
@@ -58,24 +58,20 @@ public class MainActivity extends AppCompatActivity {
         regoption();
     }
 
-    public boolean onCreateOptionsMenu (Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-
-        return true;
-    }
-
 
     @Override
     protected void onStart() {
         super.onStart();
         SharedPreferences settings=getSharedPreferences("PREFS_NAME",MODE_PRIVATE);
         Boolean isChecked=settings.getBoolean("stayConnect",false);
-        Intent si = new Intent(MainActivity.this,Choice.class);
+        Intent si = new Intent(MainActivity.this, Choice.class); //לזכור לגביי הסטיי קונקטד כאן
         if (refAuth.getCurrentUser()!=null && isChecked) {
             stayConnect=true;
-            startActivity(si);
+            startActivity(si); //לזכור לגביי הסטיי קונקטד כאן
         }
     }
+
+
 
     @Override
     protected void onPause() {
@@ -183,8 +179,6 @@ public class MainActivity extends AppCompatActivity {
                     });
         }
     }
-
-
 
 
 }

@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layoutDirection="ltr"
+    android:background="@drawable/background2"
     tools:context=".Worker">
 
 
@@ -15,6 +17,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="#feffff"
         android:text="Work Arrangement" />
 
     <LinearLayout
@@ -30,7 +34,7 @@
         android:layout_height="wrap_content"
         android:textSize="15dp"
         android:textStyle="bold"
-        android:text="Your closest event:" />
+        android:textColor="#feffff" />
 
     <ListView
         android:id="@+id/lv"
@@ -38,22 +42,13 @@
         android:layout_height="wrap_content"
         android:layout_weight="1"/>
 
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="120dp"
         android:orientation="vertical">
 
     </LinearLayout>
-
-    <TextView
-        android:id="@+id/tvdate"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:textSize="50dp"
-        android:textStyle="bold"
-        android:gravity="center"
-        />
-
 
 </LinearLayout>
 

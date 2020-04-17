@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layoutDirection="ltr"
+    android:background="@drawable/background2"
     tools:context=".Loginok">
 
     <TextView
@@ -13,6 +15,8 @@
         android:layout_height="72dp"
         android:gravity="center"
         android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="#feffff"
         android:text="Add an event.." />
 
     <LinearLayout
@@ -29,6 +33,7 @@
         android:layout_gravity="center"
         android:onClick="AddEvent"
         android:gravity="center"
+        android:background="@drawable/button_rouns2"
         android:textSize="50dp"
         android:text="+" />
 
@@ -45,6 +50,8 @@
         android:layout_height="59dp"
         android:gravity="center"
         android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="#feffff"
         android:text="Live Event" />
 
     <LinearLayout
@@ -62,6 +69,32 @@
         android:onClick="LiveEvent"
         android:gravity="center"
         android:textSize="30dp"
+        android:background="@drawable/button_rouns2"
         android:text="POSITIONS" />
+
+    <TextView
+        android:layout_marginTop="20dp"
+        android:textSize="18sp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text="Events Positions"
+        android:gravity="center"/>
+
+    <ProgressBar
+        android:id="@+id/aliopb1"
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        />
+
+    <ListView
+        android:layout_marginStart="8dp"
+        android:layout_marginEnd="8dp"
+        android:layout_marginTop="8dp"
+        android:id="@+id/liolv1"
+        android:layout_width="match_parent"
+        android:layout_height="100dp" />
 
 </LinearLayout>

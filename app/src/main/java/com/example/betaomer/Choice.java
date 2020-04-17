@@ -4,6 +4,7 @@ import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -21,15 +22,9 @@ public class Choice extends AppCompatActivity {
     }
 
 
-    public boolean onCreateOptionsMenu (Menu menu) {
-        getMenuInflater().inflate(R.menu.main, menu);
-
-        return true;
-    }
-
 
     public void ImW(View view) {
-        Intent t=new Intent(Choice.this,Worker.class);
+        Intent t=new Intent(Choice.this, Worker.class);
         startActivity(t);
     }
 
@@ -46,7 +41,7 @@ public class Choice extends AppCompatActivity {
                     public void onClick(DialogInterface dialog, int whichButton) {
                         String codereceived = edittext.getText().toString();
                         if (code.equals(codereceived)){
-                            Intent t=new Intent(Choice.this,Loginok.class);
+                            Intent t=new Intent(Choice.this, Loginok.class);
                             startActivity(t);
                         } else {
                             Toast.makeText(Choice.this, "Your code is incorrect", Toast.LENGTH_LONG).show();
@@ -62,5 +57,25 @@ public class Choice extends AppCompatActivity {
         AlertDialog ad = adb.create();
         ad.show();
 
+    }
+
+    public boolean onCreateOptionsMenu (Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main,menu);
+
+        return true;
+
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        String str = item.getTitle().toString();
+
+        if (str.equals("Credits")) {
+
+            Intent t = new Intent(this, Credits.class);
+            startActivity(t);
+        }
+        return true;
     }
 }

@@ -5,6 +5,8 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:layoutDirection="ltr"
+    android:background="@drawable/background2"
     tools:context=".YourPosition">
 
     <TextView
@@ -13,6 +15,8 @@
         android:layout_height="wrap_content"
         android:gravity="center"
         android:textSize="25dp"
+        android:textStyle="bold"
+        android:textColor="#feffff"
         android:text="Update Your Position" />
 
 
@@ -20,12 +24,12 @@
         android:id="@+id/lvE"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="12"/>
+        android:layout_weight="18"/>
 
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        android:layout_weight="1"
+        android:layout_weight="2"
         android:orientation="horizontal">
 
         <EditText
@@ -43,22 +47,27 @@
             android:layout_height="match_parent"
             android:layout_weight="1"
             android:onClick="AddFood"
+            android:textColor="#feffff"
+            android:background="@drawable/button_rouns"
             android:text="Add" />
     </LinearLayout>
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="0dp"
-        android:layout_weight="1"
-        android:orientation="horizontal">
 
-        <Button
-            android:id="@+id/btn"
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="1"
-            android:onClick="Finish"
-            android:text="Finish" />
-    </LinearLayout>
+    <Button
+        android:id="@+id/btn"
+        android:layout_width="wrap_content"
+        android:layout_gravity="center"
+        android:layout_height="0dp"
+        android:layout_weight="2"
+        android:background="@drawable/button_rouns2"
+        android:textColor="#feffff"
+        android:onClick="Finish"
+        android:text="Update to the kitchen" />
+
+    <Space
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1" />
+
 
 </LinearLayout>
