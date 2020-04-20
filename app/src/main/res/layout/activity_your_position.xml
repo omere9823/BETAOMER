@@ -26,11 +26,22 @@
         android:layout_height="0dp"
         android:layout_weight="18"/>
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.5" />
+
+
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="2"
         android:orientation="horizontal">
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.1" />
 
         <EditText
             android:id="@+id/eTfood"
@@ -39,7 +50,15 @@
             android:layout_weight="4"
             android:ems="10"
             android:inputType="textPersonName"
+            android:background="@drawable/edittext_rouns"
             android:hint="A New Food" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.3" />
+
+
 
         <Button
             android:id="@+id/btnAddfood"
@@ -50,7 +69,18 @@
             android:textColor="#feffff"
             android:background="@drawable/button_rouns"
             android:text="Add" />
+
+        <Space
+            android:layout_width="wrap_content"
+            android:layout_height="0dp"
+            android:layout_weight="0.1" />
+
     </LinearLayout>
+
+    <Space
+        android:layout_width="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.3" />
 
 
     <Button

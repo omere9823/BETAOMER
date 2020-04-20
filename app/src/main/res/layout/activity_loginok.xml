@@ -56,21 +56,11 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="51dp"
+        android:layout_height="40dp"
         android:orientation="vertical">
 
     </LinearLayout>
 
-    <Button
-        android:id="@+id/btnPO"
-        android:layout_width="wrap_content"
-        android:layout_height="80dp"
-        android:layout_gravity="center"
-        android:onClick="LiveEvent"
-        android:gravity="center"
-        android:textSize="30dp"
-        android:background="@drawable/button_rouns2"
-        android:text="POSITIONS" />
 
     <TextView
         android:layout_marginTop="20dp"
@@ -78,16 +68,11 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Events Positions"
+        android:textStyle="bold"
+        android:background="@drawable/button_rouns2"
         android:gravity="center"/>
 
-    <ProgressBar
-        android:id="@+id/aliopb1"
-        android:layout_marginStart="8dp"
-        android:layout_marginEnd="8dp"
-        android:layout_marginTop="8dp"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        />
+
 
     <ListView
         android:layout_marginStart="8dp"
@@ -95,6 +80,6 @@
         android:layout_marginTop="8dp"
         android:id="@+id/liolv1"
         android:layout_width="match_parent"
-        android:layout_height="100dp" />
+        android:layout_height="300dp" />
 
 </LinearLayout>

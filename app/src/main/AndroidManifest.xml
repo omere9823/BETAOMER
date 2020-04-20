@@ -9,7 +9,9 @@
         android:roundIcon="@mipmap/ic_launcher_round"
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
-        <activity android:name=".Credits"></activity>
+        <activity android:name=".Selectedevent"></activity>
+        <activity android:name=".HistoryEvents" />
+        <activity android:name=".Credits" />
         <activity
             android:name=".PositionsStatus"
             android:label="@string/title_activity_positions_status"

@@ -26,15 +26,13 @@ import androidx.appcompat.app.AppCompatActivity;
 import static com.example.betaomer.FBref.refEventt;
 
 
-
-
 public class Createevent extends AppCompatActivity /*implements AdapterView.OnItemClickListener*/ {
 
 
-    String eventdate;
-    String name,date,date2;
+    String eventdate, viewdate;
+    String name, date, date2;
     ListView lw1;
-    Button DateBtn ,BtnCr ,BtnAdd;
+    Button DateBtn, BtnCr, BtnAdd;
     DatePickerDialog dpd;
     Calendar c;
     TextView TVD;
@@ -62,18 +60,6 @@ public class Createevent extends AppCompatActivity /*implements AdapterView.OnIt
         ars = new ArrayList<>();
         stations = new ArrayList<>();
 
-        // OPEN DIALOG - WHEN "Create station" button click
-        // ASK FOR (Station name) and (Employer name) - "salad - omri"
-        // APPROVE - SUBMIT
-        //stations.add(new Station("name"));
-        //
-
-
-
-       //adp = new ArrayAdapter<Station>(this, R.layout.support_simple_spinner_dropdown_item, stations);
-        //lw1.setAdapter(adp);
-
-
 
         DateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -89,18 +75,23 @@ public class Createevent extends AppCompatActivity /*implements AdapterView.OnIt
                     public void onDateSet(DatePicker view, int year, int month, int dayOfMonth) {
 
                         Toast.makeText(Createevent.this, "" + dayOfMonth + "/" + (month + 1) + "/" + year, Toast.LENGTH_SHORT).show();
-                        if (month<9) {
-                            if (dayOfMonth<10) {
-                                eventdate="" + year + "_0" + (month+1) + "_0" + dayOfMonth;
+                        if (month < 9) {
+                            if (dayOfMonth < 10) {
+                                eventdate = "" + year + "_0" + (month + 1) + "_0" + dayOfMonth;
+                                viewdate = "" + dayOfMonth + "_0" + (month + 1) + "_0" + year;
                             } else {
-                                eventdate="" + year + "_0" + (month+1) + "_" + dayOfMonth;
+                                eventdate = "" + year + "_0" + (month + 1) + "_" + dayOfMonth;
+                                viewdate = "" + dayOfMonth + "_0" + (month + 1) + "_" + year;
                             }
-                        } else if (dayOfMonth<10) {
-                                eventdate="" + year + "_" + (month+1) + "_0" + dayOfMonth;
-                            } else {
-                                eventdate="" + year + "_" + (month+1) + "_" + dayOfMonth;
+                        } else if (dayOfMonth < 10) {
+                            eventdate = "" + year + "_" + (month + 1) + "_0" + dayOfMonth;
+                            viewdate = "" + dayOfMonth + "_" + (month + 1) + "_0" + year;
+
+                        } else {
+                            eventdate = "" + year + "_" + (month + 1) + "_" + dayOfMonth;
+                            viewdate = "" + dayOfMonth + "_" + (month + 1) + "_" + year;
                         }
-                        TVD.setText(eventdate);
+                        TVD.setText(viewdate);
 
                     }
                 }, day, month, year);
@@ -119,8 +110,7 @@ public class Createevent extends AppCompatActivity /*implements AdapterView.OnIt
         adb.setView(edittext);
 
 
-
-        adp=new ArrayAdapter<String> (this,R.layout.support_simple_spinner_dropdown_item,ars);
+        adp = new ArrayAdapter<String>(this, R.layout.support_simple_spinner_dropdown_item, ars);
 
         adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
                     public void onClick(DialogInterface dialog, int whichButton) {
@@ -143,45 +133,12 @@ public class Createevent extends AppCompatActivity /*implements AdapterView.OnIt
     }
 
 
-    /*@Override
-    public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-        AlertDialog.Builder adb = new AlertDialog.Builder(this);
-        final EditText edittext = new EditText(this);
-        adb.setMessage("enter the name");
-        adb.setTitle("workers");
-        adb.setView(edittext);
-
-        adp=new ArrayAdapter<String> (this,R.layout.support_simple_spinner_dropdown_item,ars);
-
-        adb.setPositiveButton("OK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-                name = edittext.getText().toString();
-                ars.set(position, ars.get(position) + name);
-                lw1.setAdapter(adp);
-
-            }
-
-
-        }
-        );
-        adb.setNegativeButton("BACK", new DialogInterface.OnClickListener() {
-            public void onClick(DialogInterface dialog, int whichButton) {
-            }
-        });
-        AlertDialog ad = adb.create();
-        ad.show();
-
-
-
-    }
-*/
-
     public void BtnCr(View view) {
 
         Eventt = new Eventt(eventdate, stations);
-        try{
+        try {
             refEventt.child(eventdate).setValue(Eventt);
-        }catch (Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -191,21 +148,27 @@ public class Createevent extends AppCompatActivity /*implements AdapterView.OnIt
     }
 
 
-    public boolean onCreateOptionsMenu (Menu menu) {
+    public boolean onCreateOptionsMenu(Menu menu) {
 
-        getMenuInflater().inflate(R.menu.main,menu);
+        getMenuInflater().inflate(R.menu.main, menu);
 
         return true;
 
     }
 
-    public boolean onOptionsItemSelected(MenuItem item){
+    public boolean onOptionsItemSelected(MenuItem item) {
 
         String str = item.getTitle().toString();
 
         if (str.equals("Credits")) {
 
-            Intent t = new Intent(this,Credits.class);
+            Intent t = new Intent(this, Credits.class);
+            startActivity(t);
+        }
+
+        if (str.equals("History Events")) {
+
+            Intent t = new Intent(this, HistoryEvents.class);
             startActivity(t);
         }
 

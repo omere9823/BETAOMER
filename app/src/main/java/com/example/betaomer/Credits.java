@@ -1,7 +1,9 @@
 package com.example.betaomer;
 
+import android.content.Intent;
 import android.os.Bundle;
 import android.view.Menu;
+import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
 
@@ -19,6 +21,25 @@ public class Credits extends AppCompatActivity {
 
         return true;
 
+    }
+
+    public boolean onOptionsItemSelected(MenuItem item){
+
+        String str = item.getTitle().toString();
+
+        if (str.equals("Credits")) {
+
+            Intent t = new Intent(this,Credits.class);
+            startActivity(t);
+        }
+
+        if (str.equals("History Events")) {
+
+            Intent t = new Intent(this, HistoryEvents.class);
+            startActivity(t);
+        }
+
+        return true;
     }
 
 }

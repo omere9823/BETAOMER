@@ -6,6 +6,7 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.SpannableString;
 import android.text.Spanned;
+import android.text.TextUtils;
 import android.text.method.LinkMovementMethod;
 import android.text.style.ClickableSpan;
 import android.util.Log;
@@ -118,65 +119,82 @@ public class MainActivity extends AppCompatActivity {
 
     public void logorreg(View view) {
         if (registered) {
-            email=eTemail.getText().toString();
-            password=eTpass.getText().toString();
+            if (!TextUtils.isEmpty(eTemail.getText().toString()) && !TextUtils.isEmpty(eTpass.getText().toString())) {
 
-            final ProgressDialog pd=ProgressDialog.show(this,"Login","Connecting...",true);
-            refAuth.signInWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            pd.dismiss();
-                            if (task.isSuccessful()) {
-                                SharedPreferences settings=getSharedPreferences("PREFS_NAME",MODE_PRIVATE);
-                                SharedPreferences.Editor editor=settings.edit();
-                                editor.putBoolean("stayConnect",cBstayconnect.isChecked());
-                                editor.commit();
-                                Log.d("MainActivity", "signinUserWithEmail:success");
-                                Toast.makeText(MainActivity.this, "Login Success", Toast.LENGTH_LONG).show();
-                                Intent si = new Intent(MainActivity.this,Choice.class);
-                                startActivity(si);
-                            } else {
-                                Log.d("MainActivity", "signinUserWithEmail:fail");
-                                Toast.makeText(MainActivity.this, "e-mail or password are wrong!", Toast.LENGTH_LONG).show();
-                            }
-                        }
-                    });
-        } else {
-            name=eTname.getText().toString();
-            phone=eTphone.getText().toString();
-            email=eTemail.getText().toString();
-            password=eTpass.getText().toString();
+                email = eTemail.getText().toString();
+                password = eTpass.getText().toString();
 
-            final ProgressDialog pd=ProgressDialog.show(this,"Register","Registering...",true);
-            refAuth.createUserWithEmailAndPassword(email, password)
-                    .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
-                        @Override
-                        public void onComplete(@NonNull Task<AuthResult> task) {
-                            pd.dismiss();
-                            if (task.isSuccessful()) {
-                                SharedPreferences settings=getSharedPreferences("PREFS_NAME",MODE_PRIVATE);
-                                SharedPreferences.Editor editor=settings.edit();
-                                editor.putBoolean("stayConnect",cBstayconnect.isChecked());
-                                editor.commit();
-                                Log.d("MainActivity", "createUserWithEmail:success");
-                                FirebaseUser user = refAuth.getCurrentUser();
-                                uid = user.getUid();
-                                userdb=new User(name,email,phone,uid);
-                                refUsers.child(uid).setValue(userdb);
-                                Toast.makeText(MainActivity.this, "Successful registration", Toast.LENGTH_LONG).show();
-                                Intent si = new Intent(MainActivity.this,Choice.class);
-                                startActivity(si);
-                            } else {
-                                if (task.getException() instanceof FirebaseAuthUserCollisionException)
-                                    Toast.makeText(MainActivity.this, "User with e-mail already exist!", Toast.LENGTH_LONG).show();
-                                else {
-                                    Log.w("MainActivity", "createUserWithEmail:failure", task.getException());
-                                    Toast.makeText(MainActivity.this, "User create failed.",Toast.LENGTH_LONG).show();
+                final ProgressDialog pd = ProgressDialog.show(this, "Login", "Connecting...", true);
+                refAuth.signInWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                pd.dismiss();
+                                if (task.isSuccessful()) {
+                                    SharedPreferences settings = getSharedPreferences("PREFS_NAME", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = settings.edit();
+                                    editor.putBoolean("stayConnect", cBstayconnect.isChecked());
+                                    editor.commit();
+                                    Log.d("MainActivity", "signinUserWithEmail:success");
+                                    Toast.makeText(MainActivity.this, "Login Success", Toast.LENGTH_LONG).show();
+                                    Intent si = new Intent(MainActivity.this, Choice.class);
+                                    startActivity(si);
+                                } else {
+                                    Log.d("MainActivity", "signinUserWithEmail:fail");
+                                    Toast.makeText(MainActivity.this, "e-mail or password are wrong!", Toast.LENGTH_LONG).show();
                                 }
                             }
-                        }
-                    });
+                        });
+            }
+            else {
+
+                Toast.makeText(MainActivity.this, "You have to fill all the fields", Toast.LENGTH_LONG).show();
+
+            }
+
+        } else {
+
+            if(!TextUtils.isEmpty(eTemail.getText().toString()) && !TextUtils.isEmpty(eTpass.getText().toString()) &&
+                    !TextUtils.isEmpty(eTphone.getText().toString()) && !TextUtils.isEmpty(eTname.getText().toString())) {
+                name = eTname.getText().toString();
+                phone = eTphone.getText().toString();
+                email = eTemail.getText().toString();
+                password = eTpass.getText().toString();
+
+                final ProgressDialog pd = ProgressDialog.show(this, "Register", "Registering...", true);
+                refAuth.createUserWithEmailAndPassword(email, password)
+                        .addOnCompleteListener(this, new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                pd.dismiss();
+                                if (task.isSuccessful()) {
+                                    SharedPreferences settings = getSharedPreferences("PREFS_NAME", MODE_PRIVATE);
+                                    SharedPreferences.Editor editor = settings.edit();
+                                    editor.putBoolean("stayConnect", cBstayconnect.isChecked());
+                                    editor.commit();
+                                    Log.d("MainActivity", "createUserWithEmail:success");
+                                    FirebaseUser user = refAuth.getCurrentUser();
+                                    uid = user.getUid();
+                                    userdb = new User(name, email, phone, uid);
+                                    refUsers.child(uid).setValue(userdb);
+                                    Toast.makeText(MainActivity.this, "Successful registration", Toast.LENGTH_LONG).show();
+                                    Intent si = new Intent(MainActivity.this, Choice.class);
+                                    startActivity(si);
+                                } else {
+                                    if (task.getException() instanceof FirebaseAuthUserCollisionException)
+                                        Toast.makeText(MainActivity.this, "User with e-mail already exist!", Toast.LENGTH_LONG).show();
+                                    else {
+                                        Log.w("MainActivity", "createUserWithEmail:failure", task.getException());
+                                        Toast.makeText(MainActivity.this, "User create failed.", Toast.LENGTH_LONG).show();
+                                    }
+                                }
+                            }
+                        });
+            }
+            else {
+
+                Toast.makeText(MainActivity.this, "You have to fill all the fields", Toast.LENGTH_LONG).show();
+            }
         }
     }
 

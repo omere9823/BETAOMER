@@ -112,7 +112,6 @@ public class Worker extends AppCompatActivity implements AdapterView.OnItemClick
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
         alls = position;
         final Intent t=new Intent(this,YourPosition.class);
-        //t.putExtra("emda",alls);
 
         Query query3 = refEventt.orderByChild("date").startAt(dateToday).limitToFirst(1);
         query3.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -126,10 +125,6 @@ public class Worker extends AppCompatActivity implements AdapterView.OnItemClick
                         date = event.getDate();
                         break;
                     }
-                    //DatabaseReference dr1 = refEventt.orderByChild("date").startAt(dateToday).limitToFirst(1).getRef();
-                    //DatabaseReference dr2 = dr1.limitToFirst(1).getRef();
-                    //DatabaseReference dr3 = dr2.child(date);
-                    //DatabaseReference dr4 = dr3.child("ars"); // []
 
                     t.putExtra("event_date", date);
                     t.putExtra("station_position",position);  // 0,1
@@ -143,7 +138,6 @@ public class Worker extends AppCompatActivity implements AdapterView.OnItemClick
 
             }
         });
-        //startActivity(t);
 
     }
 
@@ -163,6 +157,12 @@ public class Worker extends AppCompatActivity implements AdapterView.OnItemClick
         if (str.equals("Credits")) {
 
             Intent t = new Intent(this,Credits.class);
+            startActivity(t);
+        }
+
+        if (str.equals("History Events")) {
+
+            Intent t = new Intent(this, HistoryEvents.class);
             startActivity(t);
         }
 

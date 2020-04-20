@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     android:layoutDirection="ltr"
-    android:background="@color/ic_launcher_background"
+    android:background="@drawable/background2"
     tools:context=".Credits">
 
     <TextView
@@ -19,87 +19,174 @@
         android:layout_height="88dp"
         android:text="Credits " />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"/>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:orientation="vertical">
-    </LinearLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="66dp"
+            android:layout_weight="0.3"
+            android:layout_marginTop="20dp"
+            app:srcCompat="@drawable/ic_apps_black_24dp">
+
+        </ImageView>
+
 
     <TextView
         android:id="@+id/textView10"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity=""
-        android:padding="20dp"
         android:text="App name : Catering"
         android:textColor="#ffff"
         android:textSize="25dp" />
 
 
+    </LinearLayout>
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"/>
+
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:orientation="vertical">
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
 
-    </LinearLayout>
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="66dp"
+            android:layout_weight="0.3"
+            android:layout_marginTop="20dp"
+            app:srcCompat="@drawable/ic_create">
+
+        </ImageView>
 
     <TextView
         android:id="@+id/textView11"
-        android:layout_width="match_parent"
-        android:layout_height="71dp"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:textSize="25dp"
-        android:padding="20dp"
         android:textColor="#ffff"
         android:gravity=""
         android:text=" App creator :  Omer Elhyani" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:orientation="vertical">
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView12"
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="66dp"
+            android:layout_weight="0.3"
+            android:layout_marginTop="20dp"
+            app:srcCompat="@drawable/ic_designer">
+
+        </ImageView>
+
+        <TextView
+        android:id="@+id/textView12"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity=""
-        android:padding="20dp"
         android:text="App designer : Omer Elhyani"
         android:textColor="#ffff"
         android:textSize="25dp" />
 
+    </LinearLayout>
+
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"/>
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:orientation="vertical">
-    </LinearLayout>
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="66dp"
+            android:layout_weight="0.3"
+            android:layout_marginTop="20dp"
+            app:srcCompat="@drawable/ic_school">
+
+        </ImageView>
 
     <TextView
         android:id="@+id/textView13"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity=""
-        android:padding="20dp"
         android:text="Teacher/Mentor : Albert Levy"
         android:textColor="#ffff"
         android:textSize="25dp" />
 
-    <LinearLayout
-        android:layout_width="match_parent"
-        android:layout_height="35dp"
-        android:orientation="vertical">
     </LinearLayout>
 
-    <TextView
-        android:id="@+id/textView14"
+    <Space
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"/>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="1"
+        android:orientation="horizontal">
+
+        <ImageView
+            android:layout_width="0dp"
+            android:layout_height="66dp"
+            android:layout_marginTop="20dp"
+            android:layout_weight="0.3"
+            app:srcCompat="@drawable/ic_location_city">
+
+        </ImageView>
+
+        <TextView
+        android:id="@+id/textView14"
+        android:layout_width="0dp"
+        android:layout_height="match_parent"
+        android:layout_weight="1"
         android:gravity=""
-        android:padding="20dp"
         android:text="Grade/school : 12th ,Amal mekif zain"
         android:textColor="#ffff"
         android:textSize="25dp" />
+
+    </LinearLayout>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1"/>
+
 
 </LinearLayout>

@@ -4,6 +4,7 @@ import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.os.Bundle;
+import android.text.TextUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
@@ -32,17 +33,15 @@ import androidx.appcompat.app.AppCompatActivity;
 import static com.example.betaomer.FBref.refEventt;
 
 public class YourPosition extends AppCompatActivity implements AdapterView.OnItemClickListener {
-    //private AlertDialog.Builder builder;
-    //private View dialogView;
-    //private RadioGroup group;
 
-    ArrayList<Ingrediant> ingrediantArrayList ;
+    ArrayList<Ingrediant> ingrediantArrayList;
 
     EditText eTfood;
     Button btnAddfood;
-    String newfood ,status;
+    String newfood, status;
     ListView lv2;
-    ArrayList<String> sr = new ArrayList<>();;
+    ArrayList<String> sr = new ArrayList<>();
+    ;
     ArrayAdapter<String> adpp;
     private String _event_date;
     private int _station_position;
@@ -53,22 +52,18 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
         setContentView(R.layout.activity_your_position);
 
 
-
-
-
         this.ingrediantArrayList = new ArrayList<Ingrediant>();
 
-
-        btnAddfood=(Button)findViewById(R.id.btnAddfood);
-        eTfood=(EditText)findViewById(R.id.eTfood);
+        btnAddfood = (Button) findViewById(R.id.btnAddfood);
+        eTfood = (EditText) findViewById(R.id.eTfood);
         lv2 = findViewById(R.id.lvE);
 
         Intent dt = getIntent();
 
         _event_date = dt.getStringExtra("event_date");
-        _station_position = dt.getIntExtra("station_position",0);
+        _station_position = dt.getIntExtra("station_position", 0);
 
-        Query query =  refEventt.child(_event_date).child("ars").child(String.valueOf(_station_position)).child("_ingrediats");
+        Query query = refEventt.child(_event_date).child("ars").child(String.valueOf(_station_position)).child("_ingrediats");
         query.addListenerForSingleValueEvent(VEL);
 
         lv2.setOnItemClickListener(YourPosition.this);
@@ -80,10 +75,8 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
         @Override
         public void onDataChange(@NonNull DataSnapshot dS) {
             if (dS.exists()) {
-                //Station station = dS.getValue(Station.class);
 
-                //List<String> strings  = new ArrayList<>();
-                for(DataSnapshot data : dS.getChildren()) {
+                for (DataSnapshot data : dS.getChildren()) {
                     Ingrediant ingrediant = data.getValue(Ingrediant.class);
                     ingrediantArrayList.add(ingrediant);
                     sr.add(ingrediant.toString());
@@ -93,27 +86,37 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
                 lv2.setAdapter(adpp);
             }
         }
+
         @Override
         public void onCancelled(@NonNull DatabaseError databaseError) {
         }
     };
 
 
-    private void func(final int position){
+    private void func(final int position) {
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        View dialogView = (View)getLayoutInflater().inflate(R.layout.dialog_status, null);
-        RadioGroup group = (RadioGroup)dialogView.findViewById(R.id.ds1);
+        View dialogView = (View) getLayoutInflater().inflate(R.layout.dialog_status, null);
+        RadioGroup group = (RadioGroup) dialogView.findViewById(R.id.ds1);
 
         group.setOnCheckedChangeListener(new RadioGroup.OnCheckedChangeListener() {
             @Override
             public void onCheckedChanged(RadioGroup group, int checkedId) {
                 int choiceRaw = checkedId % 4;
-                switch (choiceRaw){
-                    case 1 :  status = "FULL"; break;
-                    case 2 :  status = "MED"; break;
-                    case 3 :  status = "LOW"; break;
-                    case 0 :  status = "EMPTY"; break;
-                    default: break;
+                switch (choiceRaw) {
+                    case 1:
+                        status = "FULL";
+                        break;
+                    case 2:
+                        status = "MED";
+                        break;
+                    case 3:
+                        status = "LOW";
+                        break;
+                    case 0:
+                        status = "EMPTY";
+                        break;
+                    default:
+                        break;
                 }
 
 
@@ -132,8 +135,6 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
                 ingrediantArrayList.set(position, ingrediant);
                 sr.set(position, ingrediant.toString());
 
-                //group.clearCheck();
-                //group.removeView(dialogView);
 
                 adpp.notifyDataSetChanged();
             }
@@ -141,16 +142,12 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
         builder.setNegativeButton("CANCEL", new DialogInterface.OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                //group.clearCheck();
-                //group.removeView(dialogView);
+
             }
         });
 
         AlertDialog dialog = builder.create();
         dialog.show();
-
-        //group.removeView(dialogView);
-
 
 
     }
@@ -191,68 +188,80 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
     }
 
     public void AddFood(View view) {
-        newfood = eTfood.getText().toString();
-        Ingrediant ingrediant = new Ingrediant(newfood);
-        this.ingrediantArrayList.add(ingrediant);
-        sr.add(ingrediant.toString());
-        adpp.notifyDataSetChanged();
-        eTfood.setText("");
+        if (!TextUtils.isEmpty(eTfood.getText().toString())) {
+            newfood = eTfood.getText().toString();
+            Ingrediant ingrediant = new Ingrediant(newfood);
+            this.ingrediantArrayList.add(ingrediant);
+            sr.add(ingrediant.toString());
+            adpp = new ArrayAdapter<String>(YourPosition.this, R.layout.support_simple_spinner_dropdown_item, sr);
+            lv2.setAdapter(adpp);
+            eTfood.setText("");
+        } else {
+
+            Toast.makeText(YourPosition.this, "You have to fill the new food", Toast.LENGTH_LONG).show();
+        }
     }
 
-    public void Finish(View view) {
+        public void Finish (View view){
 
-        try {
-            final Context context  = this;
-            final DatabaseReference dr1 = refEventt.child(_event_date)
-                    .child("ars")
-                    .child(String.valueOf(_station_position));
+            try {
+                final Context context = this;
+                final DatabaseReference dr1 = refEventt.child(_event_date)
+                        .child("ars")
+                        .child(String.valueOf(_station_position));
 
-            Query query = dr1;
-            query.addValueEventListener(new ValueEventListener() {
-                @Override
-                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                    if(dataSnapshot.exists()){
-                        Station station2 = dataSnapshot.getValue(Station.class);
-                        station2.set_array(ingrediantArrayList);
-                        dr1.setValue(station2);
-                        Toast.makeText(context,"Successfully updated",Toast.LENGTH_SHORT).show();
+                Query query = dr1;
+                query.addValueEventListener(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                        if (dataSnapshot.exists()) {
+                            Station station2 = dataSnapshot.getValue(Station.class);
+                            station2.set_array(ingrediantArrayList);
+                            dr1.setValue(station2);
+                            Toast.makeText(context, "Successfully updated", Toast.LENGTH_SHORT).show();
+
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(@NonNull DatabaseError databaseError) {
 
                     }
-                }
+                });
 
-                @Override
-                public void onCancelled(@NonNull DatabaseError databaseError) {
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
 
-                }
-            });
+        }
 
-        } catch (Exception e){
-            e.printStackTrace();
+        public boolean onCreateOptionsMenu (Menu menu){
+
+            getMenuInflater().inflate(R.menu.main, menu);
+
+            return true;
+
+        }
+
+        public boolean onOptionsItemSelected (MenuItem item){
+
+            String str = item.getTitle().toString();
+
+            if (str.equals("Credits")) {
+
+                Intent t = new Intent(this, Credits.class);
+                startActivity(t);
+            }
+
+            if (str.equals("History Events")) {
+
+                Intent t = new Intent(this, HistoryEvents.class);
+                startActivity(t);
+            }
+
+            return true;
         }
 
     }
-
-    public boolean onCreateOptionsMenu (Menu menu) {
-
-        getMenuInflater().inflate(R.menu.main,menu);
-
-        return true;
-
-    }
-
-    public boolean onOptionsItemSelected(MenuItem item){
-
-        String str = item.getTitle().toString();
-
-        if (str.equals("Credits")) {
-
-            Intent t = new Intent(this,Credits.class);
-            startActivity(t);
-        }
-
-        return true;
-    }
-
-}
 
 

@@ -45,8 +45,6 @@ public class PositionsStatus extends Activity {
         title.setText(String.format("Event day - %s", titleraw2));
 
         this.tableLayout.removeAllViews();
-        //fillTitleFromStation(null);
-        //fillIngrediants(null);
 
         this.tvp = new TableRow.LayoutParams(this,null);
         this.tvp.width = TableRow.LayoutParams.FILL_PARENT;
@@ -61,7 +59,7 @@ public class PositionsStatus extends Activity {
             public void run() {
                 handler.post(new Runnable() {
                     public void run() {
-                        // run progress bar
+
                         fetchResults(titleraw);
 
                     }
@@ -71,12 +69,6 @@ public class PositionsStatus extends Activity {
 
 
 
-        //fetch table to variable
-        // get event id from getContext() exats - string - "2024_07_24"
-        // query to get all the data
-        // fill table
-            // each station will have special header
-            // each station will print all ingrediant
     }
 
     private void fetchResults(String titleraw){
@@ -88,7 +80,7 @@ public class PositionsStatus extends Activity {
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
                     tableLayout.removeAllViews();
-                    // stop progress bar
+
                     ArrayList<Station> arrayList = new ArrayList<Station>();
                     for(DataSnapshot ds : dataSnapshot.getChildren()){
                         Station st = ds.getValue(Station.class);
@@ -185,11 +177,9 @@ public class PositionsStatus extends Activity {
             TableRow tableRow = new TableRow(this);
             tableRow.setLayoutParams(this.tvp);
 
-            // add cells to row
             tableRow.addView(textView);
             tableRow.addView(textView2);
 
-            // add row to table
             this.tableLayout.addView(tableRow);
         }
 

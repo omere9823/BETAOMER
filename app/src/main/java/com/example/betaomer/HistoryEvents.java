@@ -8,6 +8,7 @@ import android.view.View;
 import android.widget.AdapterView;
 import android.widget.ArrayAdapter;
 import android.widget.ListView;
+import android.widget.SearchView;
 
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
@@ -15,30 +16,31 @@ import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 
 import java.util.ArrayList;
-import java.util.Calendar;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
 import static com.example.betaomer.FBref.refEventt;
 
-public class Loginok extends AppCompatActivity {
+public class HistoryEvents extends AppCompatActivity {
+
     private ArrayList<String> arrayList;
-
-
     private ListView listView;
+    SearchView searchView;
+    ArrayAdapter <String> adapter;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_loginok);
+        setContentView(R.layout.activity_history_events);
 
         listView = (ListView)findViewById(R.id.liolv1);
-
-
         arrayList = new ArrayList<>();
+        searchView = (SearchView) findViewById(R.id.searchView);
 
-        Query query =  refEventt.orderByChild("date").startAt(getCurrentDate());
+
+
+        Query query =  refEventt.orderByChild("date");
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -48,10 +50,8 @@ public class Loginok extends AppCompatActivity {
                         Eventt eventt = ds.getValue(Eventt.class);
                         arrayList.add(eventt.getDate());
                     }
-                    fillAdapter();
                 }
             }
-
             @Override
             public void onCancelled(@NonNull DatabaseError databaseError) {
 
@@ -59,38 +59,27 @@ public class Loginok extends AppCompatActivity {
         });
 
 
+        adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1 ,arrayList);
+        listView.setAdapter(adapter);
 
-    }
-
-    private String getCurrentDate(){
-        Calendar calendar = Calendar.getInstance();
-
-        final int day = calendar.get(Calendar.DAY_OF_MONTH);
-        int month = calendar.get(Calendar.MONTH);
-        int year = calendar.get(Calendar.YEAR);
-        String dateToday;
-
-        if (month<10) {
-            if (day<10) {
-                dateToday="" + year + "_0" + (month+1) + "_0" + day;
-            } else {
-                dateToday="" + year + "_0" + (month+1) + "_" + day;
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            @Override
+            public boolean onQueryTextSubmit(String query) {
+                return false;
             }
-        } else if (day<10) {
-            dateToday="" + year + "_" + (month+1) + "_0" + day;
-        } else {
-            dateToday="" + year + "_" + (month+1) + "_" + day;
-        }
-        return dateToday;
-    }
 
-    private void fillAdapter(){
-        ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,arrayList);
-        listView.setAdapter(stringArrayAdapter);
+            @Override
+            public boolean onQueryTextChange(String newText) {
+
+                adapter.getFilter().filter(newText);
+                return false;
+            }
+        });
+
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                Intent toPositionStatusActivity = new Intent(Loginok.this,PositionsStatus.class);
+                Intent toPositionStatusActivity = new Intent(HistoryEvents.this,Selectedevent.class);
                 toPositionStatusActivity.putExtra("title",arrayList.get(position));
                 startActivity(toPositionStatusActivity);
             }
@@ -98,10 +87,7 @@ public class Loginok extends AppCompatActivity {
 
     }
 
-    public void AddEvent(View view) {
-        Intent t=new Intent(Loginok.this,Createevent.class);
-        startActivity(t);
-    }
+
 
     public boolean onCreateOptionsMenu (Menu menu) {
 

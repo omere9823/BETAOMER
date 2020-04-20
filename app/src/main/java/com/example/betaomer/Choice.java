@@ -76,6 +76,13 @@ public class Choice extends AppCompatActivity {
             Intent t = new Intent(this, Credits.class);
             startActivity(t);
         }
+
+        if (str.equals("History Events")) {
+
+            Intent t = new Intent(this, HistoryEvents.class);
+            startActivity(t);
+        }
+
         return true;
     }
 }

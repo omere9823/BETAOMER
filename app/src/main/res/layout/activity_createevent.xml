@@ -21,6 +21,12 @@
         android:textSize="25dp"
         android:text="Create your event" />
 
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.1" />
+
+
     <Button
         android:id="@+id/btnPD"
         android:layout_width="100dp"
@@ -44,7 +50,15 @@
         android:layout_height="0dp"
         android:layout_weight="6">
 
+
+
     </ListView>
+
+    <Space
+        android:layout_width="match_parent"
+        android:layout_height="0dp"
+        android:layout_weight="0.3" />
+
 
     <LinearLayout
         android:layout_width="match_parent"
@@ -96,4 +110,5 @@
         android:layout_width="match_parent"
         android:layout_height="0dp"
         android:layout_weight="0.3"/>
+
 </LinearLayout>
