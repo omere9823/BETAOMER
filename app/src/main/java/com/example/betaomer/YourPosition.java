@@ -63,7 +63,7 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
         _event_date = dt.getStringExtra("event_date");
         _station_position = dt.getIntExtra("station_position", 0);
 
-        Query query = refEventt.child(_event_date).child("ars").child(String.valueOf(_station_position)).child("_ingrediats");
+        Query query = refEventt.child(_event_date).child("ars").child(String.valueOf(_station_position)).child("_ingrediats"); // שאילתה של קבלת תמונה מהפייר בייס לפי רשימת העמדות והעמדה שנלחץ עליה, הצגת המצרכים שלה. במידה ואין מצרכים  והאירוע חדש לא יוצג כלום
         query.addListenerForSingleValueEvent(VEL);
 
         lv2.setOnItemClickListener(YourPosition.this);
@@ -150,7 +150,7 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
         dialog.show();
 
 
-    }
+    } // בעת לחיצה על המצרך, נפתח דיאלוג לשינוי המצב, המצב משתנה אך ורק בהצגת הרשימה, כדי לשנות בפייר בייס יש ללחוץ על שליחה למטבח
 
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
         if (true)
@@ -185,7 +185,7 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
             ad.show();
         }
 
-    }
+    } //לחיצה על מצרך
 
     public void AddFood(View view) {
         if (!TextUtils.isEmpty(eTfood.getText().toString())) {
@@ -200,7 +200,7 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
 
             Toast.makeText(YourPosition.this, "You have to fill the new food", Toast.LENGTH_LONG).show();
         }
-    }
+    } //כאשר רוצים להוסיף מצרך מזינים באדיט טקסט ולוחצים add
 
         public void Finish (View view){
 
@@ -233,7 +233,7 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
                 e.printStackTrace();
             }
 
-        }
+        } // שליחה למטבח את נתוני הרשימה המעודכנת
 
         public boolean onCreateOptionsMenu (Menu menu){
 
@@ -241,7 +241,7 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
 
             return true;
 
-        }
+        }  //יצירת תפריט
 
         public boolean onOptionsItemSelected (MenuItem item){
 
@@ -260,7 +260,7 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
             }
 
             return true;
-        }
+        }  //העברת אקטיביטי לתפריט שנלחץ עליו
 
     }
 

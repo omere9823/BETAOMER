@@ -21,7 +21,7 @@ public class Credits extends AppCompatActivity {
 
         return true;
 
-    }
+    }  //יצירת תפריט
 
     public boolean onOptionsItemSelected(MenuItem item){
 
@@ -40,6 +40,6 @@ public class Credits extends AppCompatActivity {
         }
 
         return true;
-    }
+    } //העברת אקטיביטי לתפריט שנלחץ עליו
 
 }

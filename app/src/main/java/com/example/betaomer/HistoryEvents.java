@@ -40,7 +40,7 @@ public class HistoryEvents extends AppCompatActivity {
 
 
 
-        Query query =  refEventt.orderByChild("date");
+        Query query =  refEventt.orderByChild("date"); //הבאת תמונה של כל האירועים לפי תאריכים
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -62,7 +62,7 @@ public class HistoryEvents extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1 ,arrayList);
         listView.setAdapter(adapter);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() { //פעולת חיפוש ברשימה לפי תאריכים
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -78,7 +78,7 @@ public class HistoryEvents extends AppCompatActivity {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) { // פעולת לחיצה על תאריך ברשימה והעברה למסך עם רשימת העמדות והעובדים של אותו אירוע
                 Intent toPositionStatusActivity = new Intent(HistoryEvents.this,Selectedevent.class);
                 toPositionStatusActivity.putExtra("title",arrayList.get(position));
                 startActivity(toPositionStatusActivity);
@@ -95,7 +95,7 @@ public class HistoryEvents extends AppCompatActivity {
 
         return true;
 
-    }
+    }   //יצירת תפריט
 
     public boolean onOptionsItemSelected(MenuItem item){
 
@@ -114,5 +114,5 @@ public class HistoryEvents extends AppCompatActivity {
         }
 
         return true;
-    }
+    } //העברת אקטיביטי לתפריט שנלחץ עליו
 }

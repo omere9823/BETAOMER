@@ -26,7 +26,7 @@ public class Choice extends AppCompatActivity {
     public void ImW(View view) {
         Intent t=new Intent(Choice.this, Worker.class);
         startActivity(t);
-    }
+    }  //פעולה שברגע שלוחצים על העפתור worker נכנסים לאזור עובד
 
 
     public void ImM(View view) {
@@ -57,7 +57,7 @@ public class Choice extends AppCompatActivity {
         AlertDialog ad = adb.create();
         ad.show();
 
-    }
+    } // פעולה שברגע לחיצה על הmanager נפתח דיאלוג לסיסמא וכאשר הסיסמא נכונה מועבר לאזור אחמש
 
     public boolean onCreateOptionsMenu (Menu menu) {
 
@@ -65,7 +65,7 @@ public class Choice extends AppCompatActivity {
 
         return true;
 
-    }
+    } //יצירת תפריט
 
     public boolean onOptionsItemSelected(MenuItem item){
 
@@ -84,5 +84,5 @@ public class Choice extends AppCompatActivity {
         }
 
         return true;
-    }
+    }  //העברת אקטיביטי לתפריט שנלחץ עליו
 }

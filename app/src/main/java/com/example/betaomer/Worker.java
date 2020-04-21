@@ -71,13 +71,13 @@ public class Worker extends AppCompatActivity implements AdapterView.OnItemClick
 
 
 
-        Query query =  refEventt.orderByChild("date").startAt(dateToday).limitToFirst(1);
+        Query query =  refEventt.orderByChild("date").startAt(dateToday).limitToFirst(1);  //שאילתה של קבלת תמונה מהפייר בייס לפי מיון של תאריכים לתאריך הקרוב ביותר
         query.addListenerForSingleValueEvent(VEL);
 
     }
 
 
-    com.google.firebase.database.ValueEventListener VEL = new ValueEventListener() {
+    com.google.firebase.database.ValueEventListener VEL = new ValueEventListener() { //הצגת התאריך של האירוע הקרוב ביותר ואת רשימת העמדות + העובדים
         @Override
         public void onDataChange(@NonNull DataSnapshot dS) {
             if (dS.exists()) {
@@ -139,7 +139,7 @@ public class Worker extends AppCompatActivity implements AdapterView.OnItemClick
             }
         });
 
-    }
+    }  // פעולה של לחיצה על רכיב ברשימה (עמדה), העברה למסך העמדה + שליחת נתונים של התאריך והמיקום של הרשימה כדי לדעת באיזה עמדה מדובר
 
 
     public boolean onCreateOptionsMenu (Menu menu) {
@@ -148,7 +148,7 @@ public class Worker extends AppCompatActivity implements AdapterView.OnItemClick
 
         return true;
 
-    }
+    } //יצירת תפריט
 
     public boolean onOptionsItemSelected(MenuItem item){
 
@@ -167,7 +167,7 @@ public class Worker extends AppCompatActivity implements AdapterView.OnItemClick
         }
 
         return true;
-    }
+    } //העברת אקטיביטי לתפריט שנלחץ עליו
 
 }
 

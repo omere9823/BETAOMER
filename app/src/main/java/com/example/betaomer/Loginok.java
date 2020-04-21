@@ -38,7 +38,7 @@ public class Loginok extends AppCompatActivity {
 
         arrayList = new ArrayList<>();
 
-        Query query =  refEventt.orderByChild("date").startAt(getCurrentDate());
+        Query query =  refEventt.orderByChild("date").startAt(getCurrentDate()); //שאילתה של קבלת תמונה של האירועים לפי התאריך של היום והלאה, כדי להציג ברשימת אירועים
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -82,7 +82,7 @@ public class Loginok extends AppCompatActivity {
             dateToday="" + year + "_" + (month+1) + "_" + day;
         }
         return dateToday;
-    }
+    } //קבלת התאריך של היום בשביל המיון בפייר בייס
 
     private void fillAdapter(){
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,arrayList);
@@ -96,12 +96,12 @@ public class Loginok extends AppCompatActivity {
             }
         });
 
-    }
+    } // הצגת הרשימה של האירועים, ובעת לחיצה על אירוע העברה למסך עם טבלה של מצב העמדות, שולח נתון של תאריך האירוע
 
     public void AddEvent(View view) {
         Intent t=new Intent(Loginok.this,Createevent.class);
         startActivity(t);
-    }
+    } // העברה למסך יצירת אירוע
 
     public boolean onCreateOptionsMenu (Menu menu) {
 
@@ -109,7 +109,7 @@ public class Loginok extends AppCompatActivity {
 
         return true;
 
-    }
+    } //יצירת תפריט
 
     public boolean onOptionsItemSelected(MenuItem item){
 
@@ -128,5 +128,5 @@ public class Loginok extends AppCompatActivity {
         }
 
         return true;
-    }
+    } //העברת אקטיביטי לתפריט שנלחץ עליו
 }

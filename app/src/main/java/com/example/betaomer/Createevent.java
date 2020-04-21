@@ -61,7 +61,7 @@ public class Createevent extends AppCompatActivity /*implements AdapterView.OnIt
         stations = new ArrayList<>();
 
 
-        DateBtn.setOnClickListener(new View.OnClickListener() {
+        DateBtn.setOnClickListener(new View.OnClickListener() { //לחיצה על כפתור התאריך נפתח לוח שנה ובוחרים בו תאריך
             @Override
             public void onClick(View view) {
 
@@ -130,7 +130,7 @@ public class Createevent extends AppCompatActivity /*implements AdapterView.OnIt
         AlertDialog ad = adb.create();
         ad.show();
 
-    }
+    } //הוספת עמדה לרשימה עם שם העמדה ושם העובד ע"י אדיט טקסט
 
 
     public void BtnCr(View view) {
@@ -145,7 +145,7 @@ public class Createevent extends AppCompatActivity /*implements AdapterView.OnIt
         Toast.makeText(this, "Successful registration", Toast.LENGTH_LONG).show();
         finish();
 
-    }
+    } //יצירת האירוע ע"י הכנסת הנתונים לפייר בייס וסגירת המסך
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -154,7 +154,7 @@ public class Createevent extends AppCompatActivity /*implements AdapterView.OnIt
 
         return true;
 
-    }
+    } //יצירת תפריט
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -173,6 +173,6 @@ public class Createevent extends AppCompatActivity /*implements AdapterView.OnIt
         }
 
         return true;
-    }
+    } //העברת אקטיביטי לתפריט שנלחץ עליו
 
 }

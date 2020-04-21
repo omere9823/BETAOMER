@@ -25,11 +25,11 @@ public class Start extends AppCompatActivity {
             @Override
             public void run() {
 
-                Intent t = new Intent(Start.this,MainActivity.class);        // מסך ראשוני שמטרתו לעשות מעבר של מסך בפתיחת האפליקציה
+                Intent t = new Intent(Start.this,MainActivity.class);        //  מסך ראשוני שמטרתו לעשות מעבר של מסך בפתיחת האפליקציה
                 startActivity(t);
                 finish();
             }
-        },SPLASH_TIME_OUT);
+        },SPLASH_TIME_OUT);   // הולד של 3 שניות
 
 
         prog();
@@ -54,5 +54,5 @@ public class Start extends AppCompatActivity {
             }
         };
         t.schedule(tt,0,30);
-    }
+    }     //פעולה של קו טעינה בהתאם להולד של המסך הראשוני
 }
