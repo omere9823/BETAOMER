@@ -2,6 +2,7 @@ package com.example.betaomer;
 
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -11,6 +12,8 @@ import android.widget.Toast;
 
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
+
+import static com.example.betaomer.FBref.refAuth;
 
 public class Choice extends AppCompatActivity {
     String code = "12345";
@@ -80,6 +83,16 @@ public class Choice extends AppCompatActivity {
         if (str.equals("History Events")) {
 
             Intent t = new Intent(this, HistoryEvents.class);
+            startActivity(t);
+        }
+
+        if (str.equals("LogOut")) {
+            refAuth.signOut();
+            SharedPreferences settings=getSharedPreferences("PREFS_NAME",MODE_PRIVATE);
+            SharedPreferences.Editor editor=settings.edit();
+            editor.putBoolean("stayConnect",false);
+            editor.commit();
+            Intent t = new Intent(this, MainActivity.class);
             startActivity(t);
         }
 

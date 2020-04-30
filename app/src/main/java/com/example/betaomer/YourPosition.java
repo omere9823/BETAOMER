@@ -3,6 +3,7 @@ package com.example.betaomer;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.view.Menu;
@@ -30,6 +31,7 @@ import androidx.annotation.NonNull;
 import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 
+import static com.example.betaomer.FBref.refAuth;
 import static com.example.betaomer.FBref.refEventt;
 
 public class YourPosition extends AppCompatActivity implements AdapterView.OnItemClickListener {
@@ -258,6 +260,17 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
                 Intent t = new Intent(this, HistoryEvents.class);
                 startActivity(t);
             }
+
+            if (str.equals("LogOut")) {
+                refAuth.signOut();
+                SharedPreferences settings=getSharedPreferences("PREFS_NAME",MODE_PRIVATE);
+                SharedPreferences.Editor editor=settings.edit();
+                editor.putBoolean("stayConnect",false);
+                editor.commit();
+                Intent t = new Intent(this, MainActivity.class);
+                startActivity(t);
+            }
+
 
             return true;
         }  //העברת אקטיביטי לתפריט שנלחץ עליו

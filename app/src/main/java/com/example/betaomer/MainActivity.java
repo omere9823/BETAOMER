@@ -38,7 +38,7 @@ public class MainActivity extends AppCompatActivity {
 
     String name, phone, email, password, uid;
     User userdb;
-    Boolean stayConnect, registered, firstrun;
+    Boolean stayConnect, registered;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,7 +78,7 @@ public class MainActivity extends AppCompatActivity {
     protected void onPause() {
         super.onPause();
         if (stayConnect) finish();
-    }
+    } //פעולה הסוגרת את מסך ההרשמה/התחברות אם המשתמש מחוברר כבר והיא מעבירה אותו למסך הבחירה
 
     private void regoption() {
         SpannableString ss = new SpannableString("Don't have an account?  Register here!");

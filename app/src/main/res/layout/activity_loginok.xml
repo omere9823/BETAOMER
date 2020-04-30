@@ -33,6 +33,7 @@
         android:layout_gravity="center"
         android:onClick="AddEvent"
         android:gravity="center"
+        android:textColor="#ffffff"
         android:background="@drawable/button_rouns2"
         android:textSize="50dp"
         android:text="+" />
@@ -68,6 +69,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="Events Positions"
+        android:textColor="#ffffff"
         android:textStyle="bold"
         android:background="@drawable/button_rouns2"
         android:gravity="center"/>

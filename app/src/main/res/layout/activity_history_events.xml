@@ -18,6 +18,7 @@
         android:layout_height="wrap_content"
         android:text="History Events"
         android:textStyle="bold"
+        android:textColor="#ffffff"
         android:background="@drawable/button_rouns2"
         android:gravity="center"/>
 

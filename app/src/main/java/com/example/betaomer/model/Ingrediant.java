@@ -3,14 +3,7 @@ package com.example.betaomer.model;
 import java.io.Serializable;
 
 public class Ingrediant implements Serializable {
-    /*static enum status  {
-            FULL,
-            MEDIUM,
-            LOW,
-            EMPTY
-    };
 
-     */
 
     String _name;
     String _status;

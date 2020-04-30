@@ -11,4 +11,9 @@
         android:title="History Events"
         android:orderInCategory="200" />
 
+    <item
+        android:id="@+id/menuLogOut"
+        android:title="LogOut"
+        android:orderInCategory="300" />
+
 </menu>

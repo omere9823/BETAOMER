@@ -1,6 +1,7 @@
 package com.example.betaomer;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -23,12 +24,13 @@ import java.util.List;
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.AppCompatActivity;
 
+import static com.example.betaomer.FBref.refAuth;
 import static com.example.betaomer.FBref.refEventt;
 
 public class Worker extends AppCompatActivity implements AdapterView.OnItemClickListener {
 
 
-    String  str1, str2, chose, dateToday;
+    String  str1 , dateToday;
     String date;
     TextView  tVsubTitle;
     ListView lv;
@@ -165,6 +167,17 @@ public class Worker extends AppCompatActivity implements AdapterView.OnItemClick
             Intent t = new Intent(this, HistoryEvents.class);
             startActivity(t);
         }
+
+        if (str.equals("LogOut")) {
+            refAuth.signOut();
+            SharedPreferences settings=getSharedPreferences("PREFS_NAME",MODE_PRIVATE);
+            SharedPreferences.Editor editor=settings.edit();
+            editor.putBoolean("stayConnect",false);
+            editor.commit();
+            Intent t = new Intent(this, MainActivity.class);
+            startActivity(t);
+        }
+
 
         return true;
     } //העברת אקטיביטי לתפריט שנלחץ עליו

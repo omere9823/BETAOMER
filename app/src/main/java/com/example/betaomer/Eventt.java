@@ -43,9 +43,7 @@ public class Eventt implements Serializable {
         return ars;
     }
 
-    //public void setArs(ArrayList<Station> ars) {
-        //this.ars = ars;
-    //}
+
     public void set_ars(ArrayList<Station> ars) {
         this.ars = ars;
     }

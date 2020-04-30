@@ -1,11 +1,14 @@
 package com.example.betaomer;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
 
 import androidx.appcompat.app.AppCompatActivity;
+
+import static com.example.betaomer.FBref.refAuth;
 
 public class Credits extends AppCompatActivity {
 
@@ -38,6 +41,17 @@ public class Credits extends AppCompatActivity {
             Intent t = new Intent(this, HistoryEvents.class);
             startActivity(t);
         }
+
+        if (str.equals("LogOut")) {
+            refAuth.signOut();
+            SharedPreferences settings=getSharedPreferences("PREFS_NAME",MODE_PRIVATE);
+            SharedPreferences.Editor editor=settings.edit();
+            editor.putBoolean("stayConnect",false);
+            editor.commit();
+            Intent t = new Intent(this, MainActivity.class);
+            startActivity(t);
+        }
+
 
         return true;
     } //העברת אקטיביטי לתפריט שנלחץ עליו
