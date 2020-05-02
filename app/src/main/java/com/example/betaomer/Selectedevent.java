@@ -41,7 +41,10 @@ public class Selectedevent extends AppCompatActivity {
         title.setText(String.format("Event day - %s", titleraw2));
 
 
-        Query query =  refEventt.orderByChild("date").equalTo(titleraw); //הבאת רשימת אירועים לפי תאריך מסוים
+        Query query =  refEventt.orderByChild("date").equalTo(titleraw);
+        /**
+         * Bring an event list by a specific date.
+         */
         query.addListenerForSingleValueEvent(VEL);
     }
 
@@ -52,18 +55,21 @@ public class Selectedevent extends AppCompatActivity {
 
                 List<String> strings  = new ArrayList<>();
                 for(DataSnapshot data : dS.getChildren()) {
-                    //str1 = (String) data.getKey();
 
                     Eventt eventt = data.getValue(Eventt.class);
                     ArrayList<Station> arrayList = eventt.ars;
 
-                    strings = new ArrayList<>(arrayList.size()); //הבאת רשימת העמדות לרשימת סטרינגים
+                    strings = new ArrayList<>(arrayList.size());
+                    /**
+                     * Bringing the list of positions to a string.
+                     */
+
                     for (Station station : arrayList) {
                         strings.add(station != null ? station.toString() : null);
                     }
 
                 }
-                adp = new ArrayAdapter<String>(Selectedevent.this, R.layout.support_simple_spinner_dropdown_item, strings); //הצגת רשימת העמדות
+                adp = new ArrayAdapter<String>(Selectedevent.this, R.layout.support_simple_spinner_dropdown_item, strings);
                 listView.setAdapter(adp);
             }
         }

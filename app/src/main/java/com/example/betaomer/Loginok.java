@@ -40,7 +40,10 @@ public class Loginok extends AppCompatActivity {
 
         arrayList = new ArrayList<>();
 
-        Query query =  refEventt.orderByChild("date").startAt(getCurrentDate()); //שאילתה של קבלת תמונה של האירועים לפי התאריך של היום והלאה, כדי להציג ברשימת אירועים
+        Query query =  refEventt.orderByChild("date").startAt(getCurrentDate());
+        /**
+         * Query a photo of the events by today's date and beyond to view a list of events.
+         */
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -84,7 +87,11 @@ public class Loginok extends AppCompatActivity {
             dateToday="" + year + "_" + (month+1) + "_" + day;
         }
         return dateToday;
-    } //קבלת התאריך של היום בשביל המיון בפייר בייס
+    }
+    /**
+     * Getting today's date for the sort at Fair Base.
+     */
+
 
     private void fillAdapter(){
         ArrayAdapter<String> stringArrayAdapter = new ArrayAdapter<String>(this,R.layout.support_simple_spinner_dropdown_item,arrayList);
@@ -98,12 +105,20 @@ public class Loginok extends AppCompatActivity {
             }
         });
 
-    } // הצגת הרשימה של האירועים, ובעת לחיצה על אירוע העברה למסך עם טבלה של מצב העמדות, שולח נתון של תאריך האירוע
+    }
+    /**
+     * View the list of events, and when you click a transfer event to a screen with the status table, sends a given date of the event.
+     */
+
 
     public void AddEvent(View view) {
         Intent t=new Intent(Loginok.this,Createevent.class);
         startActivity(t);
-    } // העברה למסך יצירת אירוע
+    }
+    /**
+     * Transfer to event creation screen.
+     */
+
 
     public boolean onCreateOptionsMenu (Menu menu) {
 
@@ -111,7 +126,11 @@ public class Loginok extends AppCompatActivity {
 
         return true;
 
-    } //יצירת תפריט
+    }
+    /**
+     * Create a menu.
+     */
+
 
     public boolean onOptionsItemSelected(MenuItem item){
 
@@ -141,5 +160,9 @@ public class Loginok extends AppCompatActivity {
 
 
         return true;
-    } //העברת אקטיביטי לתפריט שנלחץ עליו
+    }
+    /**
+     * Move activity to the clicked menu.
+     */
+
 }

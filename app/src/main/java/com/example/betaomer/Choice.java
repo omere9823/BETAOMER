@@ -29,7 +29,11 @@ public class Choice extends AppCompatActivity {
     public void ImW(View view) {
         Intent t=new Intent(Choice.this, Worker.class);
         startActivity(t);
-    }  //פעולה שברגע שלוחצים על העפתור worker נכנסים לאזור עובד
+    }
+    /**
+     * An action that once you click the worker button enters the worker area.
+     */
+
 
 
     public void ImM(View view) {
@@ -60,7 +64,11 @@ public class Choice extends AppCompatActivity {
         AlertDialog ad = adb.create();
         ad.show();
 
-    } // פעולה שברגע לחיצה על הmanager נפתח דיאלוג לסיסמא וכאשר הסיסמא נכונה מועבר לאזור אחמש
+    }
+    /**
+     * An action when the manager is clicked opens a password dialog and when the password is correct it is moved to the five.
+     */
+
 
     public boolean onCreateOptionsMenu (Menu menu) {
 
@@ -68,7 +76,11 @@ public class Choice extends AppCompatActivity {
 
         return true;
 
-    } //יצירת תפריט
+    }
+    /**
+     * Create a menu.
+     */
+
 
     public boolean onOptionsItemSelected(MenuItem item){
 
@@ -97,5 +109,9 @@ public class Choice extends AppCompatActivity {
         }
 
         return true;
-    }  //העברת אקטיביטי לתפריט שנלחץ עליו
+    }
+    /**
+     * Move activity to the clicked menu.
+     */
+
 }

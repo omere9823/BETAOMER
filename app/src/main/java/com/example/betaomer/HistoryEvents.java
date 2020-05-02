@@ -42,7 +42,10 @@ public class HistoryEvents extends AppCompatActivity {
 
 
 
-        Query query =  refEventt.orderByChild("date"); //הבאת תמונה של כל האירועים לפי תאריכים
+        Query query =  refEventt.orderByChild("date");
+        /**
+         * Bring a photo of all events by dates.
+         */
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
@@ -64,7 +67,11 @@ public class HistoryEvents extends AppCompatActivity {
         adapter = new ArrayAdapter<String>(this, android.R.layout.simple_list_item_1 ,arrayList);
         listView.setAdapter(adapter);
 
-        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() { //פעולת חיפוש ברשימה לפי תאריכים
+        searchView.setOnQueryTextListener(new SearchView.OnQueryTextListener() {
+            /**
+             * Search a list by dates.
+             */
+
             @Override
             public boolean onQueryTextSubmit(String query) {
                 return false;
@@ -80,11 +87,14 @@ public class HistoryEvents extends AppCompatActivity {
 
         listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
             @Override
-            public void onItemClick(AdapterView<?> parent, View view, int position, long id) { // פעולת לחיצה על תאריך ברשימה והעברה למסך עם רשימת העמדות והעובדים של אותו אירוע
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 Intent toPositionStatusActivity = new Intent(HistoryEvents.this,Selectedevent.class);
                 toPositionStatusActivity.putExtra("title",arrayList.get(position));
                 startActivity(toPositionStatusActivity);
             }
+            /**
+             * Clicking on a date in the list and moving to a screen with the list of positions and employees for that event.
+             */
         });
 
     }
@@ -97,7 +107,11 @@ public class HistoryEvents extends AppCompatActivity {
 
         return true;
 
-    }   //יצירת תפריט
+    }
+    /**
+     * Create a menu.
+     */
+
 
     public boolean onOptionsItemSelected(MenuItem item){
 
@@ -127,5 +141,9 @@ public class HistoryEvents extends AppCompatActivity {
 
 
         return true;
-    } //העברת אקטיביטי לתפריט שנלחץ עליו
+    }
+    /**
+     * Move activity to the clicked menu.
+     */
+
 }

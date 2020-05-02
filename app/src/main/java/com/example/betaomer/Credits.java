@@ -24,7 +24,11 @@ public class Credits extends AppCompatActivity {
 
         return true;
 
-    }  //יצירת תפריט
+    }
+    /**
+     * Create a menu.
+     */
+
 
     public boolean onOptionsItemSelected(MenuItem item){
 
@@ -54,6 +58,10 @@ public class Credits extends AppCompatActivity {
 
 
         return true;
-    } //העברת אקטיביטי לתפריט שנלחץ עליו
+    }
+    /**
+     * Move activity to the clicked menu.
+     */
+
 
 }

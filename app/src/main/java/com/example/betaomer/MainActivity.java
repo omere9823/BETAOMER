@@ -59,26 +59,36 @@ public class MainActivity extends AppCompatActivity {
         regoption();
     }
 
-
+    /**
+     * On activity start - Checking if user already logged in.
+     * If logged in & asked to be remembered - pass on.
+     * <p>
+     */
     @Override
     protected void onStart() {
         super.onStart();
         SharedPreferences settings=getSharedPreferences("PREFS_NAME",MODE_PRIVATE);
         Boolean isChecked=settings.getBoolean("stayConnect",false);
-        Intent si = new Intent(MainActivity.this, Choice.class); //לזכור לגביי הסטיי קונקטד כאן
+        Intent si = new Intent(MainActivity.this, Choice.class);
         if (refAuth.getCurrentUser()!=null && isChecked) {
             stayConnect=true;
-            startActivity(si); //לזכור לגביי הסטיי קונקטד כאן
+            startActivity(si);
         }
     }
 
 
-
+    /**
+     * On activity pause - If logged in & asked to be remembered - kill activity.
+     * <p>
+     */
     @Override
     protected void onPause() {
         super.onPause();
         if (stayConnect) finish();
-    } //פעולה הסוגרת את מסך ההרשמה/התחברות אם המשתמש מחוברר כבר והיא מעבירה אותו למסך הבחירה
+    } /**
+     * An action that closes the sign-in / login screen if the user is already logged in and moves it to the selection screen.
+     */
+
 
     private void regoption() {
         SpannableString ss = new SpannableString("Don't have an account?  Register here!");
@@ -117,6 +127,13 @@ public class MainActivity extends AppCompatActivity {
     }
 
 
+    /**
+     * Logging in or Registering to the application
+     * Using:   Firebase Auth with email & password
+     *          Firebase Realtime database with the object User to the branch Users
+     * If login or register process is Ok saving stay connect status & pass to next activity
+     * <p>
+     */
     public void logorreg(View view) {
         if (registered) {
             if (!TextUtils.isEmpty(eTemail.getText().toString()) && !TextUtils.isEmpty(eTpass.getText().toString())) {

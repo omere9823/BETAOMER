@@ -63,7 +63,7 @@ public class Createevent extends AppCompatActivity /*implements AdapterView.OnIt
         stations = new ArrayList<>();
 
 
-        DateBtn.setOnClickListener(new View.OnClickListener() { //לחיצה על כפתור התאריך נפתח לוח שנה ובוחרים בו תאריך
+        DateBtn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
 
@@ -132,7 +132,11 @@ public class Createevent extends AppCompatActivity /*implements AdapterView.OnIt
         AlertDialog ad = adb.create();
         ad.show();
 
-    } //הוספת עמדה לרשימה עם שם העמדה ושם העובד ע"י אדיט טקסט
+    }
+    /**
+     * Adds a position to the list with the position name and employee name by Edit Text.
+     */
+
 
 
     public void BtnCr(View view) {
@@ -147,7 +151,11 @@ public class Createevent extends AppCompatActivity /*implements AdapterView.OnIt
         Toast.makeText(this, "Successful registration", Toast.LENGTH_LONG).show();
         finish();
 
-    } //יצירת האירוע ע"י הכנסת הנתונים לפייר בייס וסגירת המסך
+    }
+    /**
+     * Creating the event by inserting data into Pierre Base and closing the screen.
+     */
+
 
 
     public boolean onCreateOptionsMenu(Menu menu) {
@@ -156,7 +164,11 @@ public class Createevent extends AppCompatActivity /*implements AdapterView.OnIt
 
         return true;
 
-    } //יצירת תפריט
+    }
+    /**
+     * Create a menu.
+     */
+
 
     public boolean onOptionsItemSelected(MenuItem item) {
 
@@ -186,6 +198,10 @@ public class Createevent extends AppCompatActivity /*implements AdapterView.OnIt
 
 
         return true;
-    } //העברת אקטיביטי לתפריט שנלחץ עליו
+    }
+    /**
+     * Move activity to the clicked menu.
+     */
+
 
 }

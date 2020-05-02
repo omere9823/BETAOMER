@@ -65,7 +65,10 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
         _event_date = dt.getStringExtra("event_date");
         _station_position = dt.getIntExtra("station_position", 0);
 
-        Query query = refEventt.child(_event_date).child("ars").child(String.valueOf(_station_position)).child("_ingrediats"); // שאילתה של קבלת תמונה מהפייר בייס לפי רשימת העמדות והעמדה שנלחץ עליה, הצגת המצרכים שלה. במידה ואין מצרכים  והאירוע חדש לא יוצג כלום
+        Query query = refEventt.child(_event_date).child("ars").child(String.valueOf(_station_position)).child("_ingrediats");
+        /**
+         * Query to get a picture from Pierre Bays according to the list of positions and the position it is pressed for, showing its ingredients. If there are no groceries and the new event will not show anything
+         */
         query.addListenerForSingleValueEvent(VEL);
 
         lv2.setOnItemClickListener(YourPosition.this);
@@ -152,7 +155,10 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
         dialog.show();
 
 
-    } // בעת לחיצה על המצרך, נפתח דיאלוג לשינוי המצב, המצב משתנה אך ורק בהצגת הרשימה, כדי לשנות בפייר בייס יש ללחוץ על שליחה למטבח
+    }
+    /**
+     * When you click on the staple, a dialog opens to change the situation, the situation changes only when the list is displayed, to change Pierre Base you have to click send to the kitchen.
+     */
 
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
         if (true)
@@ -187,7 +193,10 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
             ad.show();
         }
 
-    } //לחיצה על מצרך
+    }
+    /**
+     * Clicking on a commodity.
+     */
 
     public void AddFood(View view) {
         if (!TextUtils.isEmpty(eTfood.getText().toString())) {
@@ -202,79 +211,92 @@ public class YourPosition extends AppCompatActivity implements AdapterView.OnIte
 
             Toast.makeText(YourPosition.this, "You have to fill the new food", Toast.LENGTH_LONG).show();
         }
-    } //כאשר רוצים להוסיף מצרך מזינים באדיט טקסט ולוחצים add
+    }
+    /**
+     * When you want to add a nutrient in text editor and click add.
+     */
 
-        public void Finish (View view){
+    public void Finish(View view) {
 
-            try {
-                final Context context = this;
-                final DatabaseReference dr1 = refEventt.child(_event_date)
-                        .child("ars")
-                        .child(String.valueOf(_station_position));
+        try {
+            final Context context = this;
+            final DatabaseReference dr1 = refEventt.child(_event_date)
+                    .child("ars")
+                    .child(String.valueOf(_station_position));
 
-                Query query = dr1;
-                query.addValueEventListener(new ValueEventListener() {
-                    @Override
-                    public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
-                        if (dataSnapshot.exists()) {
-                            Station station2 = dataSnapshot.getValue(Station.class);
-                            station2.set_array(ingrediantArrayList);
-                            dr1.setValue(station2);
-                            Toast.makeText(context, "Successfully updated", Toast.LENGTH_SHORT).show();
-
-                        }
-                    }
-
-                    @Override
-                    public void onCancelled(@NonNull DatabaseError databaseError) {
+            Query query = dr1;
+            query.addValueEventListener(new ValueEventListener() {
+                @Override
+                public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
+                    if (dataSnapshot.exists()) {
+                        Station station2 = dataSnapshot.getValue(Station.class);
+                        station2.set_array(ingrediantArrayList);
+                        dr1.setValue(station2);
+                        Toast.makeText(context, "Successfully updated", Toast.LENGTH_SHORT).show();
 
                     }
-                });
+                }
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+                @Override
+                public void onCancelled(@NonNull DatabaseError databaseError) {
 
-        } // שליחה למטבח את נתוני הרשימה המעודכנת
+                }
+            });
 
-        public boolean onCreateOptionsMenu (Menu menu){
-
-            getMenuInflater().inflate(R.menu.main, menu);
-
-            return true;
-
-        }  //יצירת תפריט
-
-        public boolean onOptionsItemSelected (MenuItem item){
-
-            String str = item.getTitle().toString();
-
-            if (str.equals("Credits")) {
-
-                Intent t = new Intent(this, Credits.class);
-                startActivity(t);
-            }
-
-            if (str.equals("History Events")) {
-
-                Intent t = new Intent(this, HistoryEvents.class);
-                startActivity(t);
-            }
-
-            if (str.equals("LogOut")) {
-                refAuth.signOut();
-                SharedPreferences settings=getSharedPreferences("PREFS_NAME",MODE_PRIVATE);
-                SharedPreferences.Editor editor=settings.edit();
-                editor.putBoolean("stayConnect",false);
-                editor.commit();
-                Intent t = new Intent(this, MainActivity.class);
-                startActivity(t);
-            }
-
-
-            return true;
-        }  //העברת אקטיביטי לתפריט שנלחץ עליו
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
+    /**
+     * Send the kitchen the updated list data.
+     */
+
+    public boolean onCreateOptionsMenu(Menu menu) {
+
+        getMenuInflater().inflate(R.menu.main, menu);
+
+        return true;
+
+    }
+
+    /**
+     * Create a menu.
+     */
+
+    public boolean onOptionsItemSelected(MenuItem item) {
+
+        String str = item.getTitle().toString();
+
+        if (str.equals("Credits")) {
+
+            Intent t = new Intent(this, Credits.class);
+            startActivity(t);
+        }
+
+        if (str.equals("History Events")) {
+
+            Intent t = new Intent(this, HistoryEvents.class);
+            startActivity(t);
+        }
+
+        if (str.equals("LogOut")) {
+            refAuth.signOut();
+            SharedPreferences settings = getSharedPreferences("PREFS_NAME", MODE_PRIVATE);
+            SharedPreferences.Editor editor = settings.edit();
+            editor.putBoolean("stayConnect", false);
+            editor.commit();
+            Intent t = new Intent(this, MainActivity.class);
+            startActivity(t);
+        }
+
+
+        return true;
+    }
+    /**
+     * Move activity to the clicked menu.
+     */
+
+}
 
 

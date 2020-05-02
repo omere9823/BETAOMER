@@ -44,7 +44,10 @@ public class PositionsStatus extends Activity {
         String titleraw2 = titleraw.replace('_','/');
         title.setText(String.format("Event day - %s", titleraw2));
 
-        this.tableLayout.removeAllViews(); //מחיקה של הנתונים בxml כדי להציג טבלה שנוצרת בjava
+        this.tableLayout.removeAllViews();
+        /**
+         * Delete the data in xml to display a table created in java.
+         */
 
         this.tvp = new TableRow.LayoutParams(this,null);
         this.tvp.width = TableRow.LayoutParams.FILL_PARENT;
@@ -60,7 +63,7 @@ public class PositionsStatus extends Activity {
                 handler.post(new Runnable() {
                     public void run() {
 
-                        fetchResults(titleraw); //קריאה לפעולה כל זמן מסוים
+                        fetchResults(titleraw);
 
                     }
                 });
@@ -74,23 +77,26 @@ public class PositionsStatus extends Activity {
     private void fetchResults(String titleraw){
 
 
-        final Query query =  refEventt.child(titleraw).child("ars"); //קבלת תמונה של מערך העמדות מהפייר בייס בהתאם לאירוע שמוצג בכותרת
+        final Query query =  refEventt.child(titleraw).child("ars");
+        /**
+         * Get a picture of the positioning from Pierre Bayes according to the event shown in the title
+         */
         query.addValueEventListener(new ValueEventListener() {
             @Override
             public void onDataChange(@NonNull DataSnapshot dataSnapshot) {
                 if(dataSnapshot.exists()){
-                    tableLayout.removeAllViews(); // גריסה של הטבלה הקודמת
+                    tableLayout.removeAllViews();
 
                     ArrayList<Station> arrayList = new ArrayList<Station>();
-                    for(DataSnapshot ds : dataSnapshot.getChildren()){ //רץ על כל עמדה
-                        Station st = ds.getValue(Station.class); //קבלת מערך העמדות
+                    for(DataSnapshot ds : dataSnapshot.getChildren()){
+                        Station st = ds.getValue(Station.class);
 
                         ArrayList<Ingrediant> arrayListIngrediants = new ArrayList<>();
-                        for(DataSnapshot obj : ds.child("_ingrediats").getChildren()){ //רץ על כל המצרכים של אותה עמדה
+                        for(DataSnapshot obj : ds.child("_ingrediats").getChildren()){
                             Ingrediant ingrediant = obj.getValue(Ingrediant.class);
                             arrayListIngrediants.add(ingrediant);
                         }
-                        st.set_array(arrayListIngrediants); //קבלת מערך המצרכים
+                        st.set_array(arrayListIngrediants);
                         fillTitleFromStation(st);
                         fillIngrediants(st.get_ingrediats());
                     }
@@ -103,17 +109,11 @@ public class PositionsStatus extends Activity {
             }
         });
 
-    } // השמת ערכים בטבלה ע"י קריאה לפייר בייס ולפעולה למילוי שורה של עמדה ולפעולה של מילוי שורה של מצרך
+    }
+    /**
+     * Place values in the table by calling Pierre Bayes and filling a line of position and taking a line of goods.
+     */
 
-    /*private void handleStations(ArrayList<Station> arrayList){}*/
-
-    /*private void handleEvent(Eventt eventt){
-        ArrayList<Station> arrayListStation = eventt.getArs();
-        for(Station station : arrayListStation){
-            fillTitleFromStation(station);
-            fillIngrediants(station.get_ingrediats());
-        }
-    }*/
 
     private void fillTitleFromStation(Station station){
         // create layout params for textview
@@ -147,7 +147,11 @@ public class PositionsStatus extends Activity {
 
         // add row to table
         this.tableLayout.addView(tableRow);
-    } // יצירת שורה (עמדה) בטבלה של עמדה, קבלת נתונים מהפעולה fetchResults
+    }
+    /**
+     * Create a row (position) in a position table, getting data from the action
+     */
+
 
     private void fillIngrediants(ArrayList<Ingrediant> arrayList){
 
@@ -183,6 +187,9 @@ public class PositionsStatus extends Activity {
             this.tableLayout.addView(tableRow);
         }
 
-    } // יצירת מצרכים בתור שורה, כל שורה מצרך עם סטטוס וצבע מזהה
+    }
+    /**
+     * Create Ingredients As A Line, Each Ingredient Line With Status And ID Color.
+     */
 
 }
